@@ -1198,6 +1198,703 @@
     .welcome-card { padding: 28px 22px; }
     .form-row.split { grid-template-columns: 1fr; }
   }
+
+  /* ════════════════════════════════════════════════════════════════
+     ▓▓▓ V2 OVERRIDES — Login pulido + Header con stats + Tabs limpios
+     ════════════════════════════════════════════════════════════════ */
+
+  /* ── LOGIN: layout & wordmark refinements ─────────────────────── */
+  .welcome-content { max-width: 460px; padding: 0 4px; }
+
+  .welcome-logo {
+    width: 88px; height: 88px;
+    margin-bottom: 22px;
+    filter: drop-shadow(0 8px 24px rgba(112,48,160,0.45)) brightness(1.05);
+    animation: none;
+  }
+
+  .welcome-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 999px;
+    margin-bottom: 18px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    color: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .we-dot {
+    width: 6px; height: 6px;
+    background: var(--purple-light);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--purple-light);
+    animation: we-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes we-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .welcome-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 78px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 0.88;
+    letter-spacing: -2.5px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 12px;
+    text-wrap: balance;
+  }
+  .welcome-title span {
+    background: linear-gradient(120deg, var(--purple-light) 0%, var(--fuchsia) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .welcome-sub {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  /* The card */
+  .welcome-card {
+    background: rgba(255,255,255,0.98);
+    border-radius: 22px;
+    padding: 32px 28px 28px;
+    width: 100%;
+    box-shadow: 0 30px 80px -10px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08);
+    border-top: none;
+    position: relative;
+  }
+  .welcome-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 24px; right: 24px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--purple), var(--fuchsia), var(--teal));
+    border-radius: 0 0 3px 3px;
+  }
+
+  .login-head { margin-bottom: 22px; }
+  .welcome-card h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--carbon);
+    text-transform: none;
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+    line-height: 1.05;
+  }
+  .welcome-card .lead {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--gray-text);
+    margin-bottom: 0;
+  }
+
+  /* Floating label inputs */
+  .form-row.floating {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .form-row.floating > label {
+    position: absolute;
+    left: 44px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    padding: 0 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-text);
+    letter-spacing: 0;
+    text-transform: none;
+    pointer-events: none;
+    transition: all 0.18s ease;
+    margin: 0;
+  }
+  .form-row.floating.sub > label { left: 14px; }
+  .form-row.floating > input {
+    width: 100%;
+    padding: 18px 14px 18px 44px;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--carbon);
+    background: #fff;
+    transition: all 0.18s ease;
+  }
+  .form-row.floating.sub > input { padding-left: 14px; }
+  .form-row.floating > .field-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px; height: 20px;
+    color: var(--gray-mid);
+    transition: color 0.18s;
+    pointer-events: none;
+  }
+  .form-row.floating > input:focus {
+    outline: none;
+    border-color: var(--purple);
+    box-shadow: 0 0 0 4px rgba(112,48,160,0.12);
+  }
+  .form-row.floating > input:focus + label,
+  .form-row.floating > input:not(:placeholder-shown) + label {
+    top: 0;
+    left: 14px !important;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--purple);
+    background: #fff;
+  }
+  .form-row.floating > input:focus ~ .field-icon { color: var(--purple); }
+  .form-row.floating > input.error {
+    border-color: var(--red-err);
+    background: #fff5f5;
+  }
+  .form-row.split.floating { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .form-row.split > .form-row { margin-bottom: 0; }
+
+  .form-error {
+    color: var(--red-err);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 6px;
+    padding-left: 4px;
+  }
+
+  /* Email display in step 2 */
+  .step-email-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--purple-pale);
+    border: 1.5px solid rgba(112,48,160,0.18);
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--purple-dark);
+    font-weight: 600;
+    margin-bottom: 16px;
+    word-break: break-all;
+  }
+  .step-email-display::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--green-ok);
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(45,138,78,0.18);
+  }
+
+  .step-back {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Barlow', sans-serif; font-size: 11.5px; font-weight: 700;
+    color: var(--purple); letter-spacing: 1.5px; padding: 4px 0;
+    margin-bottom: 14px; display: inline-flex; align-items: center; gap: 6px;
+    text-transform: uppercase;
+    transition: gap 0.15s;
+  }
+  .step-back svg { width: 14px; height: 14px; }
+  .step-back:hover { color: var(--purple-dark); gap: 9px; }
+
+  /* Primary button (overrides existing) */
+  .btn-primary {
+    width: 100%; padding: 16px 20px;
+    background: var(--carbon);
+    color: #fff; border: none; border-radius: 14px;
+    font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer;
+    transition: all 0.18s ease;
+    box-shadow: 0 6px 16px -4px rgba(45,43,44,0.4), inset 0 -2px 0 rgba(0,0,0,0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(112,48,160,0.95) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px -6px rgba(112,48,160,0.5), inset 0 -2px 0 rgba(0,0,0,0.2); }
+  .btn-primary:hover::before { transform: translateX(100%); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary svg { width: 18px; height: 18px; position: relative; z-index: 1; }
+  .btn-primary > span { position: relative; z-index: 1; }
+  .btn-primary:disabled { background: var(--gray-mid); cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-primary:disabled::before { display: none; }
+
+  /* Custom checkbox */
+  .form-checkbox {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 18px 0 22px;
+    font-size: 12.5px;
+    color: var(--gray-text);
+    line-height: 1.55;
+    cursor: pointer;
+    user-select: none;
+  }
+  .form-checkbox > input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .form-checkbox .cb-box {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+    margin-top: 1px;
+  }
+  .form-checkbox .cb-box svg {
+    width: 14px; height: 14px;
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.15s ease;
+  }
+  .form-checkbox > input:checked + .cb-box {
+    background: var(--purple);
+    border-color: var(--purple);
+  }
+  .form-checkbox > input:checked + .cb-box svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .form-checkbox > input:focus-visible + .cb-box {
+    box-shadow: 0 0 0 3px rgba(112,48,160,0.25);
+  }
+  .form-checkbox strong { color: var(--carbon); }
+
+  /* Trust row (badges below button) */
+  .welcome-trust {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--gray-text);
+  }
+  .trust-item svg { width: 18px; height: 18px; color: var(--purple); }
+
+  /* Prize chip below card */
+  .welcome-prize-chip {
+    margin-top: 18px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.78);
+  }
+  .welcome-prize-chip svg {
+    width: 22px; height: 22px;
+    color: var(--purple-light);
+    flex-shrink: 0;
+  }
+  .welcome-prize-chip strong { color: #fff; }
+
+  /* ── HEADER (post-login) ──────────────────────────────────────── */
+  .site-header { background: var(--carbon); border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+  .header-top-bar {
+    background: linear-gradient(90deg, var(--purple-dark) 0%, var(--purple) 100%);
+    padding: 9px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.92);
+  }
+  .htb-brand { display: inline-flex; align-items: center; gap: 8px; }
+  .htb-brand svg { width: 14px; height: 14px; }
+  .htb-sep { opacity: 0.55; margin: 0 4px; }
+  .htb-loc { opacity: 0.75; }
+
+  .header-main {
+    padding: 18px 28px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .header-brand { gap: 14px; }
+
+  .z-mark {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(112,48,160,0.45), inset 0 1px 0 rgba(255,255,255,0.18);
+    position: relative;
+    overflow: hidden;
+  }
+  .z-mark::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+  }
+  .z-mark span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -1px;
+  }
+
+  .header-title h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .header-title h1 span {
+    background: linear-gradient(120deg, var(--purple-light), var(--fuchsia));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
+  .header-title .subtitle {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 4px;
+  }
+
+  .user-chip {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 5px 14px 5px 5px;
+    border-radius: 999px;
+    transition: background 0.15s;
+  }
+  .user-chip:hover { background: rgba(255,255,255,0.09); }
+  .user-avatar {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, var(--purple-light), var(--purple));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    font-size: 14px;
+  }
+  .user-info .name { font-size: 13px; font-weight: 600; }
+  .user-info .logout {
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    transition: color 0.15s;
+  }
+  .user-info .logout:hover { color: var(--purple-light); }
+
+  /* ── STATS STRIP ──────────────────────────────────────────────── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 28px 22px;
+  }
+  .stat-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 12px 14px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    transition: all 0.18s ease;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    right: 12px; top: 50%;
+    width: 16px; height: 16px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.4'><path d='M9 18l6-6-6-6'/></svg>") center/contain no-repeat;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.18s, transform 0.18s;
+  }
+  .stat-card:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.16);
+    transform: translateY(-1px);
+  }
+  .stat-card:hover::after { opacity: 1; transform: translate(2px, -50%); }
+
+  .stat-icon {
+    width: 38px; height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(112,48,160,0.18);
+    color: var(--purple-light);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stat-icon svg { width: 19px; height: 19px; }
+
+  .stat-rank .stat-icon { background: rgba(212,168,54,0.15); color: var(--gold); }
+  .stat-progress .stat-icon { background: rgba(28,137,175,0.18); color: var(--teal); }
+
+  .stat-body { min-width: 0; flex: 1; }
+  .stat-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .stat-main {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.3px;
+  }
+  .stat-of {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.45);
+    margin-left: 2px;
+  }
+  .stat-sub {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .stat-countdown .stat-sub { color: var(--purple-light); font-variant-numeric: tabular-nums; }
+  .stat-countdown .stat-sub.live { color: var(--fuchsia); animation: pulseLive 1.6s ease-in-out infinite; }
+  @keyframes pulseLive { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  .stat-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .stat-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--purple-light));
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ── NAV TABS ─────────────────────────────────────────────────── */
+  .nav-tabs {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; height: 0; }
+
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 14px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: none;
+    color: var(--gray-text);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    scroll-snap-align: start;
+    position: relative;
+  }
+  .tab-btn .tab-icon {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+    color: currentColor;
+    opacity: 0.7;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .tab-btn:hover { color: var(--purple); }
+  .tab-btn:hover .tab-icon { opacity: 1; }
+  .tab-btn.active {
+    color: var(--purple);
+    font-weight: 700;
+    border-bottom-color: transparent;
+  }
+  .tab-btn.active .tab-icon {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  /* Animated indicator under active tab */
+  .tab-indicator {
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--purple), var(--purple-light));
+    border-radius: 3px 3px 0 0;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), width 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    will-change: transform, width;
+  }
+
+  /* Badge on tab */
+  .tab-badge {
+    background: var(--fuchsia);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 999px;
+    min-width: 18px;
+    text-align: center;
+    line-height: 1.3;
+    box-shadow: 0 2px 6px rgba(250,65,204,0.4);
+    letter-spacing: 0;
+  }
+  .tab-badge[hidden] { display: none; }
+
+  /* ── MOBILE ───────────────────────────────────────────────────── */
+  @media (max-width: 740px) {
+    .header-top-bar { padding: 7px 14px; font-size: 9.5px; letter-spacing: 1.8px; }
+    .htb-loc { display: none; }
+    .header-main { padding: 14px 14px; gap: 10px; }
+    .z-mark { width: 38px; height: 38px; }
+    .z-mark span { font-size: 22px; }
+    .header-title h1 { font-size: 19px; }
+    .header-title .subtitle { font-size: 8.5px; letter-spacing: 1.8px; }
+    .user-chip { padding: 4px 11px 4px 4px; }
+    .user-info .name { font-size: 11.5px; }
+    .user-info .logout { font-size: 9px; }
+    .user-avatar { width: 30px; height: 30px; font-size: 12px; }
+
+    .stats-strip {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(180px, 1fr);
+      gap: 8px;
+      padding: 0 14px 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .stats-strip::-webkit-scrollbar { display: none; }
+    .stat-card { scroll-snap-align: start; padding: 10px 12px; }
+    .stat-icon { width: 34px; height: 34px; }
+    .stat-icon svg { width: 17px; height: 17px; }
+
+    .nav-tabs { padding: 0 8px; }
+    .tab-btn { padding: 14px 11px; font-size: 12px; gap: 6px; }
+    .tab-btn .tab-icon { width: 16px; height: 16px; }
+    .tab-btn span { font-size: 12px; }
+  }
+
+  @media (max-width: 420px) {
+    .welcome-title { font-size: 60px; letter-spacing: -1.8px; }
+    .welcome-sub { letter-spacing: 2.5px; font-size: 10px; }
+    .welcome-card { padding: 26px 22px 22px; }
+    .welcome-card h2 { font-size: 26px; }
+    .welcome-trust { gap: 2px; }
+    .trust-item { font-size: 9.5px; letter-spacing: 0.5px; }
+  }
+
 </style>
 </head>
 <body>
@@ -1226,55 +1923,88 @@
       alt="Somos Zeta Digital Advice"
     >
 
-    <div class="welcome-title">PRODE <span>MUNDIAL</span><br>2026</div>
-    <div class="welcome-sub">Tecnología que ACERCA · Soluciones que TRANSFORMAN</div>
+    <div class="welcome-eyebrow">
+      <span class="we-dot"></span>
+      <span>SOMOS ZETA · DIGITAL ADVICE</span>
+    </div>
+    <h1 class="welcome-title">Prode <span>Mundial</span><br>2026</h1>
+    <div class="welcome-sub">FIFA World Cup · USA · Canadá · México</div>
 
     <div class="welcome-card">
-      <div class="prize-hint">
-        🏆 <strong>Premio:</strong> Voucher para <strong>Academia Zeta</strong> — nuestra plataforma de Inteligencia Artificial.
-      </div>
 
       <!-- ── STEP 1: Solo email ── -->
       <div id="step1" class="login-step">
-        <h2>Ingresá al prode</h2>
-        <p class="lead">Si ya jugaste antes, ingresá con tu email y entrás directo.</p>
-        <div class="form-row">
-          <label for="email">Email</label>
-          <input type="email" id="email" autocomplete="email" placeholder="tu@email.com">
+        <div class="login-head">
+          <h2>Bienvenido al prode</h2>
+          <p class="lead">Si ya jugaste antes, ingresás directo con tu email. Si es tu primera vez, te creamos la cuenta en un paso.</p>
+        </div>
+
+        <div class="form-row floating">
+          <input type="email" id="email" autocomplete="email" placeholder=" " required>
+          <label for="email">Tu email</label>
+          <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           <div class="form-error" id="emailError">Ingresá un email válido</div>
         </div>
+
         <button class="btn-primary" id="continueBtn" onclick="checkEmail()">
-          CONTINUAR →
+          <span>Continuar</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
         </button>
-        <div class="welcome-footer">Tu email es tu identificación. Sin contraseña.</div>
+
+        <div class="welcome-trust">
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>Sin contraseña</span>
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            <span>3 premios</span>
+          </div>
+          <div class="trust-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>104 partidos</span>
+          </div>
+        </div>
       </div>
 
       <!-- ── STEP 2: Datos adicionales (solo nuevos usuarios) ── -->
       <div id="step2" class="login-step hidden">
-        <button class="step-back" onclick="backToStep1()">← Cambiar email</button>
-        <h2>Crear cuenta</h2>
-        <p class="lead" style="margin-bottom:12px;">Primera vez por acá — completá tu perfil.</p>
+        <button class="step-back" onclick="backToStep1()" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          Cambiar email
+        </button>
+        <div class="login-head">
+          <h2>Creá tu cuenta</h2>
+          <p class="lead">Primera vez por acá — solo necesitamos tu nombre.</p>
+        </div>
         <div class="step-email-display" id="emailDisplay"></div>
         <div class="form-row split">
-          <div>
+          <div class="form-row floating sub">
+            <input type="text" id="firstName" autocomplete="given-name" placeholder=" ">
             <label for="firstName">Nombre</label>
-            <input type="text" id="firstName" autocomplete="given-name" placeholder="Nombre">
           </div>
-          <div>
+          <div class="form-row floating sub">
+            <input type="text" id="lastName" autocomplete="family-name" placeholder=" ">
             <label for="lastName">Apellido</label>
-            <input type="text" id="lastName" autocomplete="family-name" placeholder="Apellido">
           </div>
         </div>
-        <div class="form-checkbox">
+        <label class="form-checkbox" for="acceptTerms">
           <input type="checkbox" id="acceptTerms" checked>
-          <label for="acceptTerms" style="cursor:pointer;font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--gray-text);margin:0;">
-            Acepto recibir comunicaciones de Somos Zeta sobre el prode y Academia Zeta.
-          </label>
-        </div>
+          <span class="cb-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </span>
+          <span>Acepto recibir comunicaciones de Somos Zeta sobre el prode y <strong>Academia Zeta</strong>.</span>
+        </label>
         <button class="btn-primary" id="registerBtn" onclick="registerUser()">
-          REGISTRARME Y ENTRAR
+          <span>Crear cuenta y entrar</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
         </button>
       </div>
+    </div>
+
+    <div class="welcome-prize-chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      <span>El podio se lleva un voucher para <strong>Academia Zeta</strong> — nuestra plataforma de IA aplicada.</span>
     </div>
   </div>
 </div>
@@ -1285,38 +2015,103 @@
 <div id="app">
 
   <!-- HEADER -->
-  <div class="site-header">
+  <header class="site-header">
     <div class="header-top-bar">
-      <span>SOMOS ZETA DIGITAL ADVICE · Esperanza, Santa Fe</span>
-      <span>⚽ MUNDIAL FIFA 2026 · USA · CANADA · MEXICO</span>
+      <span class="htb-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        SOMOS ZETA <span class="htb-sep">·</span> DIGITAL ADVICE
+      </span>
+      <span class="htb-loc">Esperanza, Santa Fe · Argentina</span>
     </div>
+
     <div class="header-main">
       <div class="header-brand">
         <div class="z-mark"><span>Z</span></div>
         <div class="header-title">
-          <h1>PRODE <span>MUNDIAL</span> 2026</h1>
-          <div class="subtitle">Tecnología que ACERCA · Soluciones que TRANSFORMAN</div>
+          <h1>Prode <span>Mundial</span> 2026</h1>
+          <div class="subtitle">FIFA · USA · Canadá · México</div>
         </div>
       </div>
-      <div class="user-chip">
+
+      <div class="user-chip" id="userChip">
         <div class="user-avatar" id="userAvatar">L</div>
         <div class="user-info">
           <div class="name" id="userName">Leonardo</div>
-          <button class="logout" onclick="logout()">Salir</button>
+          <button class="logout" onclick="logout()" type="button">Cerrar sesión</button>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- STATS STRIP — pronóstico próximo / ranking / progreso -->
+    <div class="stats-strip" id="statsStrip">
+      <button class="stat-card stat-countdown" type="button" onclick="showTab('pronosticos', document.querySelectorAll('.tab-btn')[1])">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><circle cx="12" cy="16" r="1" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-label">Próximo partido</div>
+          <div class="stat-main" id="statMatchTeams">Cargando…</div>
+          <div class="stat-sub" id="statMatchTime">—</div>
+        </div>
+      </button>
+
+      <button class="stat-card stat-rank" type="button" onclick="showTab('tabla', document.querySelectorAll('.tab-btn')[2])">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-label">Tu posición</div>
+          <div class="stat-main" id="statRankMain">
+            <span id="statRankPos">—</span><span class="stat-of" id="statRankOf"></span>
+          </div>
+          <div class="stat-sub" id="statRankPts">Sin puntos cargados</div>
+        </div>
+      </button>
+
+      <button class="stat-card stat-progress" type="button" onclick="showTab('pronosticos', document.querySelectorAll('.tab-btn')[1])">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11H6a2 2 0 0 0-2 2v7"/><path d="M15 11h3a2 2 0 0 1 2 2v7"/><path d="M9 7a3 3 0 1 0 6 0 3 3 0 0 0-6 0z"/><path d="m9 19 3 3 3-3"/></svg>
+        </div>
+        <div class="stat-body">
+          <div class="stat-label">Pronósticos</div>
+          <div class="stat-main">
+            <span id="statProgDone">0</span><span class="stat-of" id="statProgTotal">/0</span>
+          </div>
+          <div class="stat-bar"><div class="stat-bar-fill" id="statProgBar" style="width:0%"></div></div>
+        </div>
+      </button>
+    </div>
+  </header>
 
   <!-- NAV -->
-  <div class="nav-tabs">
-    <button class="tab-btn active" onclick="showTab('reglas', this)">📋 Cómo se juega</button>
-    <button class="tab-btn" onclick="showTab('pronosticos', this)">⚽ Mis Pronósticos</button>
-    <button class="tab-btn" onclick="showTab('tabla', this)">🏆 Tabla</button>
-    <button class="tab-btn" onclick="showTab('resultados', this)">🎯 Resultados</button>
-    <button class="tab-btn" onclick="showTab('premios', this)">🎁 Premios</button>
-    <button class="tab-btn" onclick="showTab('somos-zeta', this)">💼 Somos Zeta</button>
-  </div>
+  <nav class="nav-tabs" id="navTabs">
+    <button class="tab-btn active" onclick="showTab('reglas', this)" data-tab="reglas">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      <span>Cómo se juega</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('pronosticos', this)" data-tab="pronosticos">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m12 7 4.7 3.4-1.8 5.5h-5.8L7.3 10.4 12 7z"/><path d="m12 7 0-5"/><path d="m16.7 10.4 4.7-1.5"/><path d="m15 16-3 5"/><path d="m9 16-7 3"/><path d="m7.3 10.4-4.7-1.5"/></svg>
+      <span>Mis Pronósticos</span>
+      <span class="tab-badge" id="tabBadgeProno" hidden>0</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('tabla', this)" data-tab="tabla">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      <span>Tabla</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('resultados', this)" data-tab="resultados">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <span>Resultados</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('premios', this)" data-tab="premios">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+      <span>Premios</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('somos-zeta', this)" data-tab="somos-zeta">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      <span>Somos Zeta</span>
+    </button>
+    <span class="tab-indicator" id="tabIndicator" aria-hidden="true"></span>
+  </nav>
 
   <!-- ════════════ PANEL: REGLAS ════════════ -->
   <div id="tab-reglas" class="panel active">
@@ -1543,15 +2338,15 @@
         </div>
         <div class="contact-item">
           <label>Email</label>
-          <a href="mailto:formacion@somos-zeta.com">formacion@somos-zeta.com</a>
+          <a href="/cdn-cgi/l/email-protection#c3a5acb1aea2a0aaacad83b0acaeacb0eeb9a6b7a2eda0acae"><span class="__cf_email__" data-cfemail="167079647b77757f79785665797b79653b6c7362773875797b">[email&#160;protected]</span></a>
         </div>
         <div class="contact-item">
           <label>Instagram</label>
-          <a href="https://www.instagram.com/somoszeta_da/" target="_blank" rel="noopener">@somoszeta_da</a>
+          <a href="https://www.instagram.com/somoszeta_da/" target="_blank" rel="noopener">@somos.zeta</a>
         </div>
         <div class="contact-item">
           <label>LinkedIn</label>
-          <a href="https://www.linkedin.com/company/somos-zeta-da/" target="_blank" rel="noopener">/somos-zeta-da</a>
+          <a href="https://www.linkedin.com/company/somos-zeta-da/" target="_blank" rel="noopener">/somos-zeta</a>
         </div>
         <div class="contact-item">
           <label>Origen</label>
@@ -1569,7 +2364,7 @@
 
 <div class="toast" id="toast">✅ Guardado correctamente</div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ════════════════════════════════════════════════════════════════
    CONFIG — REEMPLAZAR CON LA URL DE TU APPS SCRIPT WEB APP
    ════════════════════════════════════════════════════════════════ */
@@ -2229,6 +3024,277 @@ function renderTabla(tabla) {
   document.getElementById('email').addEventListener('keydown', e => {
     if (e.key === 'Enter') checkEmail();
   });
+})();
+</script>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   V2 UI ADDITIONS — additive only, no logic changes
+   · Animated active-tab indicator
+   · Header stats strip: next match · ranking · progress
+   · Tab badge for pendientes
+   ════════════════════════════════════════════════════════════════ */
+(function v2UI() {
+  // Wait for DOM
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  function init() {
+    setupTabIndicator();
+    setupStatsRefresh();
+  }
+
+  /* ── Animated tab indicator ───────────────────────────────────── */
+  function setupTabIndicator() {
+    const nav = document.getElementById('navTabs');
+    const indicator = document.getElementById('tabIndicator');
+    if (!nav || !indicator) return;
+
+    function moveTo(btn) {
+      if (!btn) return;
+      const navRect = nav.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+      const left = btnRect.left - navRect.left + nav.scrollLeft;
+      indicator.style.transform = `translateX(${left}px)`;
+      indicator.style.width = `${btnRect.width}px`;
+      // Make sure active tab is visible on mobile
+      if (btnRect.left < navRect.left + 10) {
+        nav.scrollTo({ left: nav.scrollLeft + (btnRect.left - navRect.left) - 20, behavior: 'smooth' });
+      } else if (btnRect.right > navRect.right - 10) {
+        nav.scrollTo({ left: nav.scrollLeft + (btnRect.right - navRect.right) + 20, behavior: 'smooth' });
+      }
+    }
+
+    function syncFromActive() {
+      const active = nav.querySelector('.tab-btn.active');
+      moveTo(active);
+    }
+
+    // Initial position (after fonts/layout settle)
+    requestAnimationFrame(() => requestAnimationFrame(syncFromActive));
+
+    // Watch clicks: defer to after showTab updates classes
+    nav.addEventListener('click', e => {
+      const btn = e.target.closest('.tab-btn');
+      if (!btn) return;
+      requestAnimationFrame(() => moveTo(btn));
+    });
+
+    window.addEventListener('resize', () => requestAnimationFrame(syncFromActive));
+
+    // Re-sync when header/stats load (in case layout shifts)
+    setTimeout(syncFromActive, 500);
+    setTimeout(syncFromActive, 1500);
+  }
+
+  /* ── Stats: read existing globals, update widgets ─────────────── */
+  let myRank = null;       // { pos, total, pts }
+  let lastRankFetch = 0;
+
+  function setupStatsRefresh() {
+    // Refresh every 2s while on the app (cheap DOM reads)
+    setInterval(refreshStats, 2000);
+    refreshStats();
+    // Also refresh on tab change
+    window.addEventListener('click', e => {
+      if (e.target.closest('.tab-btn') || e.target.closest('.stat-card')) {
+        setTimeout(refreshStats, 100);
+      }
+    }, true);
+
+    // Try to grab ranking once data is around
+    setInterval(maybeFetchRanking, 5000);
+    setTimeout(maybeFetchRanking, 1500);
+
+    // Countdown ticks every second
+    setInterval(updateCountdownOnly, 1000);
+  }
+
+  function refreshStats() {
+    if (!document.getElementById('app').classList.contains('active')) return;
+    updateNextMatch();
+    updateRanking();
+    updateProgress();
+  }
+
+  /* ── Next match countdown ─────────────────────────────────────── */
+  let nextMatch = null;
+
+  function updateNextMatch() {
+    const teamsEl = document.getElementById('statMatchTeams');
+    const timeEl = document.getElementById('statMatchTime');
+    if (!teamsEl || !timeEl) return;
+
+    const list = (window.partidos || []);
+    if (!list.length) {
+      teamsEl.textContent = 'Sin datos aún';
+      timeEl.textContent = '—';
+      return;
+    }
+
+    const now = Date.now();
+    let upcoming = list
+      .filter(m => m.deadline && new Date(m.deadline).getTime() > now)
+      .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+
+    if (!upcoming.length) {
+      // Tournament finished, find the most recent past match
+      const past = list
+        .filter(m => m.deadline)
+        .sort((a, b) => new Date(b.deadline) - new Date(a.deadline));
+      if (past.length) {
+        nextMatch = past[0];
+        teamsEl.textContent = teamsShort(nextMatch);
+        timeEl.textContent = 'Último partido';
+        timeEl.classList.remove('live');
+      } else {
+        teamsEl.textContent = 'Próximamente';
+        timeEl.textContent = 'Junio 2026';
+      }
+      return;
+    }
+
+    nextMatch = upcoming[0];
+    teamsEl.textContent = teamsShort(nextMatch);
+    timeEl.textContent = formatCountdown(new Date(nextMatch.deadline).getTime() - now);
+  }
+
+  function updateCountdownOnly() {
+    if (!nextMatch) return;
+    const timeEl = document.getElementById('statMatchTime');
+    if (!timeEl) return;
+    const ms = new Date(nextMatch.deadline).getTime() - Date.now();
+    if (ms <= 0) {
+      timeEl.textContent = '● EN VIVO';
+      timeEl.classList.add('live');
+      // Refresh full next match in ~10s
+      return;
+    }
+    timeEl.classList.remove('live');
+    timeEl.textContent = formatCountdown(ms);
+  }
+
+  function teamsShort(m) {
+    const local = (m.equipo_local || '?').toString();
+    const visit = (m.equipo_visitante || '?').toString();
+    return `${shortName(local)} vs ${shortName(visit)}`;
+  }
+  function shortName(name) {
+    if (!name) return '?';
+    // Use abbreviation if name is longer than 12 chars
+    if (name.length <= 11) return name;
+    return name.slice(0, 3).toUpperCase();
+  }
+  function formatCountdown(ms) {
+    if (ms < 0) return '—';
+    const s = Math.floor(ms / 1000);
+    const d = Math.floor(s / 86400);
+    const h = Math.floor((s % 86400) / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    if (d > 0) return `${d}d ${h}h ${m}m`;
+    if (h > 0) return `${h}h ${m}m ${pad(sec)}s`;
+    if (m > 0) return `${m}m ${pad(sec)}s`;
+    return `${sec}s`;
+  }
+  function pad(n) { return n < 10 ? '0' + n : n; }
+
+  /* ── Ranking ──────────────────────────────────────────────────── */
+  function maybeFetchRanking() {
+    if (!document.getElementById('app').classList.contains('active')) return;
+    if (!window.currentUser || !window.callApi) return;
+    const now = Date.now();
+    // Refetch at most every 60s
+    if (now - lastRankFetch < 60000) return;
+    lastRankFetch = now;
+
+    callApi('getTablaPosiciones').then(res => {
+      const tabla = (res && res.tabla) || [];
+      computeMyRank(tabla);
+      updateRanking();
+    }).catch(() => {});
+  }
+
+  function computeMyRank(tabla) {
+    if (!window.currentUser || !tabla.length) { myRank = null; return; }
+    const myEmail = (currentUser.email || '').toLowerCase();
+    const idx = tabla.findIndex(s => (s.email || '').toLowerCase() === myEmail);
+    if (idx === -1) {
+      myRank = { pos: null, total: tabla.length, pts: 0 };
+    } else {
+      myRank = { pos: idx + 1, total: tabla.length, pts: tabla[idx].pts || 0 };
+    }
+  }
+
+  function updateRanking() {
+    const posEl = document.getElementById('statRankPos');
+    const ofEl = document.getElementById('statRankOf');
+    const ptsEl = document.getElementById('statRankPts');
+    if (!posEl) return;
+
+    if (!myRank) {
+      posEl.textContent = '—';
+      ofEl.textContent = '';
+      ptsEl.textContent = 'Cargando ranking…';
+      return;
+    }
+
+    if (myRank.pos === null) {
+      posEl.textContent = '—';
+      ofEl.textContent = '';
+      ptsEl.textContent = 'Cargá tus pronósticos';
+      return;
+    }
+
+    posEl.textContent = '#' + myRank.pos;
+    ofEl.textContent = ' / ' + myRank.total;
+    ptsEl.textContent = myRank.pts + ' pts acumulados';
+  }
+
+  /* ── Pronósticos progress ─────────────────────────────────────── */
+  function updateProgress() {
+    const doneEl = document.getElementById('statProgDone');
+    const totEl = document.getElementById('statProgTotal');
+    const barEl = document.getElementById('statProgBar');
+    const badge = document.getElementById('tabBadgeProno');
+    if (!doneEl) return;
+
+    const list = (window.partidos || []);
+    const pronos = (window.pronosticos || {});
+    if (!list.length) {
+      doneEl.textContent = '0';
+      totEl.textContent = '/0';
+      barEl.style.width = '0%';
+      return;
+    }
+
+    // Only count matches that haven't closed yet (or have a pronóstico)
+    const openMatches = list.filter(m => {
+      const closed = m.deadline && new Date(m.deadline) <= new Date();
+      return !closed;
+    });
+    const total = openMatches.length || list.length;
+    const done = openMatches.filter(m => pronos[m.id] && pronos[m.id].h !== '' && pronos[m.id].a !== '').length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    doneEl.textContent = done;
+    totEl.textContent = '/' + total;
+    barEl.style.width = pct + '%';
+
+    // Tab badge: matches without prediction
+    const pending = total - done;
+    if (badge) {
+      if (pending > 0 && total > 0) {
+        badge.textContent = pending > 99 ? '99+' : pending;
+        badge.hidden = false;
+      } else {
+        badge.hidden = true;
+      }
+    }
+  }
+
 })();
 </script>
 </body>
