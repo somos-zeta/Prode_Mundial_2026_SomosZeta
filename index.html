@@ -2338,7 +2338,7 @@
         </div>
         <div class="contact-item">
           <label>Email</label>
-          <a href="/cdn-cgi/l/email-protection#c3a5acb1aea2a0aaacad83b0acaeacb0eeb9a6b7a2eda0acae"><span class="__cf_email__" data-cfemail="167079647b77757f79785665797b79653b6c7362773875797b">[email&#160;protected]</span></a>
+          <a href="/cdn-cgi/l/email-protection#42242d302f23212b2d2c02312d2f2d316f382736236c212d2f"><span class="__cf_email__" data-cfemail="24424b564945474d4b4a64574b494b57095e4150450a474b49">[email&#160;protected]</span></a>
         </div>
         <div class="contact-item">
           <label>Instagram</label>
@@ -3035,6 +3035,14 @@ function renderTabla(tabla) {
    · Tab badge for pendientes
    ════════════════════════════════════════════════════════════════ */
 (function v2UI() {
+  // Read a top-level `let` declaration from the other <script>.
+  // `let` does NOT attach to window, but lives in the shared global lexical scope,
+  // so we eval the bare identifier through Function() to reach it.
+  function readGlobal(name) {
+    try { return (new Function('try { return ' + name + '; } catch(e) { return undefined; }'))(); }
+    catch (e) { return undefined; }
+  }
+
   // Wait for DOM
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -3128,7 +3136,7 @@ function renderTabla(tabla) {
     const timeEl = document.getElementById('statMatchTime');
     if (!teamsEl || !timeEl) return;
 
-    const list = (window.partidos || []);
+    const list = readGlobal('partidos') || [];
     if (!list.length) {
       teamsEl.textContent = 'Sin datos aún';
       timeEl.textContent = '—';
@@ -3205,13 +3213,15 @@ function renderTabla(tabla) {
   /* ── Ranking ──────────────────────────────────────────────────── */
   function maybeFetchRanking() {
     if (!document.getElementById('app').classList.contains('active')) return;
-    if (!window.currentUser || !window.callApi) return;
+    const user = readGlobal('currentUser');
+    const api  = readGlobal('callApi');
+    if (!user || !api) return;
     const now = Date.now();
     // Refetch at most every 60s
     if (now - lastRankFetch < 60000) return;
     lastRankFetch = now;
 
-    callApi('getTablaPosiciones').then(res => {
+    api('getTablaPosiciones').then(res => {
       const tabla = (res && res.tabla) || [];
       computeMyRank(tabla);
       updateRanking();
@@ -3219,8 +3229,9 @@ function renderTabla(tabla) {
   }
 
   function computeMyRank(tabla) {
-    if (!window.currentUser || !tabla.length) { myRank = null; return; }
-    const myEmail = (currentUser.email || '').toLowerCase();
+    const user = readGlobal('currentUser');
+    if (!user || !tabla.length) { myRank = null; return; }
+    const myEmail = (user.email || '').toLowerCase();
     const idx = tabla.findIndex(s => (s.email || '').toLowerCase() === myEmail);
     if (idx === -1) {
       myRank = { pos: null, total: tabla.length, pts: 0 };
@@ -3262,8 +3273,8 @@ function renderTabla(tabla) {
     const badge = document.getElementById('tabBadgeProno');
     if (!doneEl) return;
 
-    const list = (window.partidos || []);
-    const pronos = (window.pronosticos || {});
+    const list   = readGlobal('partidos')    || [];
+    const pronos = readGlobal('pronosticos') || {};
     if (!list.length) {
       doneEl.textContent = '0';
       totEl.textContent = '/0';
