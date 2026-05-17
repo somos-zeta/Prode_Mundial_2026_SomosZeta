@@ -51,7 +51,7 @@
   }
 
   /* ════════════════════════════════════════════════════════════════
-     WELCOME / LOGIN
+     WELCOME / LOGIN — Fondo animado + login de 2 pasos
      ════════════════════════════════════════════════════════════════ */
   #welcomeScreen {
     min-height: 100vh;
@@ -65,241 +65,223 @@
     overflow: hidden;
   }
 
-  #welcomeScreen::before {
-    content: 'Z';
-    position: absolute;
-    top: -120px; right: -80px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 700px;
-    font-weight: 900;
-    color: rgba(112,48,160,0.07);
-    line-height: 0.85;
-    pointer-events: none;
-    user-select: none;
+  /* ── Capa Aurora ── */
+  .aurora-layer {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
   }
-
-  #welcomeScreen::after {
-    content: '';
+  .aurora-blob {
     position: absolute;
-    bottom: -150px; left: -150px;
-    width: 500px; height: 500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(112,48,160,0.3) 0%, transparent 70%);
+    filter: blur(72px);
+    will-change: transform;
+  }
+  .aurora-blob-1 {
+    width: 65vw; height: 55vh;
+    background: radial-gradient(ellipse, rgba(112,48,160,0.72) 0%, transparent 70%);
+    top: -15vh; left: -10vw;
+    animation: aurora-b1 28s ease-in-out infinite;
+  }
+  .aurora-blob-2 {
+    width: 55vw; height: 65vh;
+    background: radial-gradient(ellipse, rgba(250,65,204,0.38) 0%, transparent 68%);
+    bottom: -20vh; right: -8vw;
+    animation: aurora-b2 28s ease-in-out infinite;
+  }
+  .aurora-blob-3 {
+    width: 50vw; height: 50vh;
+    background: radial-gradient(ellipse, rgba(28,137,175,0.42) 0%, transparent 65%);
+    top: 25vh; right: 5vw;
+    animation: aurora-b3 28s ease-in-out infinite;
+  }
+
+  @keyframes aurora-b1 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    25%  { transform: translate(18vw,25vh) scale(1.25); }
+    50%  { transform: translate(32vw,-8vh) scale(0.9); }
+    75%  { transform: translate(8vw,38vh)  scale(1.1); }
+  }
+  @keyframes aurora-b2 {
+    0%,100% { transform: translate(0,0) scale(1); }
+    33%  { transform: translate(-22vw,-18vh) scale(1.3); }
+    66%  { transform: translate(-8vw,22vh)   scale(0.75); }
+  }
+  @keyframes aurora-b3 {
+    0%,100% { transform: translate(0,0) scale(1); opacity: 0.9; }
+    40%  { transform: translate(-28vw,12vh)  scale(1.4); opacity: 0.6; }
+    80%  { transform: translate(12vw,-22vh)  scale(0.85); opacity: 0.8; }
+  }
+
+  /* ── Capa Circuit ── */
+  .circuit-layer {
+    position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background-repeat: repeat;
+    background-size: 300px 300px;
+    opacity: 0.13;
+    animation: circuit-pan 90s linear infinite;
+  }
+  @keyframes circuit-pan {
+    from { background-position: 0 0; }
+    to   { background-position: 300px 300px; }
+  }
+
+  /* ── Capa Partículas ── */
+  .particles-layer {
+    position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: particle-drift linear infinite;
     pointer-events: none;
   }
-
-  .welcome-brand {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 28px;
-    position: relative;
-    z-index: 2;
+  @keyframes particle-drift {
+    0%   { transform: translate(0,0);                            opacity: 0; }
+    12%  { opacity: var(--op,0.4); }
+    88%  { opacity: var(--op,0.4); }
+    100% { transform: translate(var(--dx,10px), var(--dy,-70px)); opacity: 0; }
   }
 
-  .z-mark {
-    width: 56px;
-    height: 56px;
-    background: var(--purple);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    box-shadow: 0 4px 24px rgba(112,48,160,0.5);
+  /* ── Contenido del Welcome ── */
+  .welcome-content {
+    position: relative; z-index: 10;
+    display: flex; flex-direction: column; align-items: center;
+    width: 100%;
   }
 
-  .z-mark span {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 38px;
-    font-weight: 900;
-    color: #fff;
-    line-height: 1;
+  .welcome-logo {
+    width: 110px; height: 110px;
+    object-fit: contain;
+    margin-bottom: 18px;
+    filter: drop-shadow(0 4px 24px rgba(112,48,160,0.6));
+    animation: logo-glow 4s ease-in-out infinite alternate;
   }
-
-  .welcome-brand-text .name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 26px;
-    font-weight: 900;
-    color: #fff;
-    letter-spacing: 2px;
-    line-height: 1;
-    text-transform: uppercase;
-  }
-
-  .welcome-brand-text .tagline {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--purple-light);
-    margin-top: 3px;
+  @keyframes logo-glow {
+    from { filter: drop-shadow(0 4px 24px rgba(112,48,160,0.5)); }
+    to   { filter: drop-shadow(0 4px 40px rgba(250,65,204,0.5)); }
   }
 
   .welcome-title {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 76px;
+    font-size: 72px;
     font-weight: 900;
     color: #fff;
     line-height: 0.92;
     letter-spacing: -2px;
     text-transform: uppercase;
     text-align: center;
-    margin-bottom: 14px;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 10px;
     max-width: 600px;
   }
-
   .welcome-title span { color: var(--purple-light); }
 
   .welcome-sub {
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.6);
-    letter-spacing: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 3px;
     text-transform: uppercase;
     text-align: center;
-    margin-bottom: 36px;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 32px;
   }
 
   .welcome-card {
-    background: #fff;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(20px);
     border-radius: 16px;
     padding: 36px 32px;
     width: 100%;
-    max-width: 460px;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    z-index: 2;
+    max-width: 440px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08);
     border-top: 5px solid var(--purple);
   }
 
   .welcome-card h2 {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--carbon);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     line-height: 1;
   }
 
   .welcome-card .lead {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.6;
     color: var(--gray-text);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   .welcome-card .prize-hint {
     background: linear-gradient(135deg, var(--purple-pale), #fff);
     border-left: 3px solid var(--purple);
-    padding: 12px 14px;
+    padding: 10px 14px;
     border-radius: 0 8px 8px 0;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--carbon);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     line-height: 1.5;
   }
-
   .welcome-card .prize-hint strong { color: var(--purple); }
 
-  .form-row {
-    margin-bottom: 16px;
-  }
+  /* Step slide */
+  .login-step { transition: opacity 0.25s ease; }
+  .login-step.hidden { display: none; }
 
-  .form-row.split {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .form-row label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+  .step-back {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Barlow', sans-serif; font-size: 12px; font-weight: 600;
+    color: var(--purple); letter-spacing: 1px; padding: 0;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 4px;
     text-transform: uppercase;
-    color: var(--carbon);
-    margin-bottom: 6px;
+  }
+  .step-back:hover { color: var(--purple-dark); }
+
+  .step-email-display {
+    background: var(--off-white); border: 2px solid var(--border);
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 13px; color: var(--carbon); font-weight: 600;
+    margin-bottom: 16px; word-break: break-all;
   }
 
+  .form-row { margin-bottom: 16px; }
+  .form-row.split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-row label {
+    display: block; font-size: 11px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--carbon); margin-bottom: 6px;
+  }
   .form-row input[type="text"],
   .form-row input[type="email"] {
-    width: 100%;
-    padding: 12px 14px;
-    border: 2px solid var(--border);
-    border-radius: 8px;
-    font-family: 'Barlow', sans-serif;
-    font-size: 14px;
-    color: var(--carbon);
-    background: var(--off-white);
-    transition: all 0.15s;
+    width: 100%; padding: 12px 14px;
+    border: 2px solid var(--border); border-radius: 8px;
+    font-family: 'Barlow', sans-serif; font-size: 14px;
+    color: var(--carbon); background: var(--off-white); transition: all 0.15s;
   }
-
-  .form-row input:focus {
-    outline: none;
-    border-color: var(--purple);
-    background: #fff;
-  }
-
-  .form-row input.error {
-    border-color: var(--red-err);
-    background: #fff5f5;
-  }
+  .form-row input:focus { outline: none; border-color: var(--purple); background: #fff; }
+  .form-row input.error { border-color: var(--red-err); background: #fff5f5; }
 
   .form-checkbox {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 20px;
-    font-size: 12px;
-    color: var(--gray-text);
-    line-height: 1.5;
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 20px; font-size: 12px; color: var(--gray-text); line-height: 1.5;
   }
-
   .form-checkbox input { margin-top: 2px; cursor: pointer; accent-color: var(--purple); }
 
   .btn-primary {
-    width: 100%;
-    padding: 14px 20px;
-    background: var(--purple);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Barlow', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.15s;
-    box-shadow: 0 4px 14px rgba(112,48,160,0.3);
+    width: 100%; padding: 14px 20px;
+    background: var(--purple); color: #fff; border: none; border-radius: 8px;
+    font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    transition: all 0.15s; box-shadow: 0 4px 14px rgba(112,48,160,0.3);
   }
-
   .btn-primary:hover { background: var(--purple-dark); transform: translateY(-1px); }
   .btn-primary:active { transform: translateY(0); }
   .btn-primary:disabled { background: var(--gray-mid); cursor: not-allowed; transform: none; box-shadow: none; }
 
-  .welcome-footer {
-    text-align: center;
-    margin-top: 18px;
-    font-size: 12px;
-    color: var(--gray-text);
-  }
+  .welcome-footer { text-align: center; margin-top: 16px; font-size: 11px; color: var(--gray-text); }
 
-  .form-error {
-    color: var(--red-err);
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 6px;
-    display: none;
-  }
-
+  .form-error { color: var(--red-err); font-size: 12px; font-weight: 600; margin-top: 6px; display: none; }
   .form-error.show { display: block; }
 
   /* ════════════════════════════════════════════════════════════════
@@ -1242,60 +1224,82 @@
 <body>
 
 <!-- ════════════════════════════════════════════════════════════════
-     WELCOME SCREEN (REGISTRO / LOGIN)
+     WELCOME SCREEN — Aurora + Circuit + Partículas + Login 2 pasos
      ════════════════════════════════════════════════════════════════ -->
 <div id="welcomeScreen">
-  <div class="welcome-brand">
-    <div class="z-mark"><span>Z</span></div>
-    <div class="welcome-brand-text">
-      <div class="name">SOMOS ZETA</div>
-      <div class="tagline">DIGITAL ADVICE</div>
-    </div>
+
+  <!-- CAPA 1: Aurora -->
+  <div class="aurora-layer">
+    <div class="aurora-blob aurora-blob-1"></div>
+    <div class="aurora-blob aurora-blob-2"></div>
+    <div class="aurora-blob aurora-blob-3"></div>
   </div>
 
-  <div class="welcome-title">PRODE <span>MUNDIAL</span><br>2026</div>
-  <div class="welcome-sub">Tecnología que ACERCA · Soluciones que TRANSFORMAN</div>
+  <!-- CAPA 2: Circuit (background-image se setea desde JS) -->
+  <div class="circuit-layer" id="circuitLayer"></div>
 
-  <div class="welcome-card">
-    <h2>Sumate al prode</h2>
-    <p class="lead">Predecí los resultados del Mundial 2026 y participá del ranking de Somos Zeta.</p>
+  <!-- CAPA 3: Partículas (se generan desde JS) -->
+  <div class="particles-layer" id="particlesLayer"></div>
 
-    <div class="prize-hint">
-      🏆 <strong>Premio mayor:</strong> Voucher para un curso completo en <strong>Academia Zeta</strong>, nuestra plataforma de Inteligencia Artificial.
-    </div>
+  <!-- CONTENIDO -->
+  <div class="welcome-content">
+    <!-- Logo real Somos Zeta (isotipo con anillo) -->
+    <img
+      class="welcome-logo"
+      src="https://i.ibb.co/qwvvn0d/Somos-Zeta-Exportar-Mesa-de-trabajo-1-copia-15.png"
+      alt="Somos Zeta Digital Advice"
+      onerror="this.style.display='none'"
+    >
 
-    <form id="registerForm" onsubmit="return false;">
-      <div class="form-row split">
-        <div>
-          <label for="firstName">Nombre</label>
-          <input type="text" id="firstName" autocomplete="given-name" required>
+    <div class="welcome-title">PRODE <span>MUNDIAL</span><br>2026</div>
+    <div class="welcome-sub">Tecnología que ACERCA · Soluciones que TRANSFORMAN</div>
+
+    <div class="welcome-card">
+      <div class="prize-hint">
+        🏆 <strong>Premio:</strong> Voucher para <strong>Academia Zeta</strong> — nuestra plataforma de Inteligencia Artificial.
+      </div>
+
+      <!-- ── STEP 1: Solo email ── -->
+      <div id="step1" class="login-step">
+        <h2>Ingresá al prode</h2>
+        <p class="lead">Si ya jugaste antes, ingresá con tu email y entrás directo.</p>
+        <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" autocomplete="email" placeholder="tu@email.com">
+          <div class="form-error" id="emailError">Ingresá un email válido</div>
         </div>
-        <div>
-          <label for="lastName">Apellido</label>
-          <input type="text" id="lastName" autocomplete="family-name" required>
+        <button class="btn-primary" id="continueBtn" onclick="checkEmail()">
+          CONTINUAR →
+        </button>
+        <div class="welcome-footer">Tu email es tu identificación. Sin contraseña.</div>
+      </div>
+
+      <!-- ── STEP 2: Datos adicionales (solo nuevos usuarios) ── -->
+      <div id="step2" class="login-step hidden">
+        <button class="step-back" onclick="backToStep1()">← Cambiar email</button>
+        <h2>Crear cuenta</h2>
+        <p class="lead" style="margin-bottom:12px;">Primera vez por acá — completá tu perfil.</p>
+        <div class="step-email-display" id="emailDisplay"></div>
+        <div class="form-row split">
+          <div>
+            <label for="firstName">Nombre</label>
+            <input type="text" id="firstName" autocomplete="given-name" placeholder="Nombre">
+          </div>
+          <div>
+            <label for="lastName">Apellido</label>
+            <input type="text" id="lastName" autocomplete="family-name" placeholder="Apellido">
+          </div>
         </div>
+        <div class="form-checkbox">
+          <input type="checkbox" id="acceptTerms" checked>
+          <label for="acceptTerms" style="cursor:pointer;font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;color:var(--gray-text);margin:0;">
+            Acepto recibir comunicaciones de Somos Zeta sobre el prode y Academia Zeta.
+          </label>
+        </div>
+        <button class="btn-primary" id="registerBtn" onclick="registerUser()">
+          REGISTRARME Y ENTRAR
+        </button>
       </div>
-
-      <div class="form-row">
-        <label for="email">Email</label>
-        <input type="email" id="email" autocomplete="email" required placeholder="tu@email.com">
-        <div class="form-error" id="emailError">Ingresá un email válido</div>
-      </div>
-
-      <div class="form-checkbox">
-        <input type="checkbox" id="acceptTerms" checked>
-        <label for="acceptTerms" style="cursor:pointer; font-size:12px; font-weight:400; letter-spacing:0; text-transform:none; color:var(--gray-text); margin:0;">
-          Acepto recibir comunicaciones de Somos Zeta sobre el prode y Academia Zeta.
-        </label>
-      </div>
-
-      <button type="submit" class="btn-primary" id="registerBtn" onclick="registerUser()">
-        ENTRAR AL PRODE
-      </button>
-    </form>
-
-    <div class="welcome-footer">
-      ¿Ya jugaste antes? Ingresá con el mismo email.
     </div>
   </div>
 </div>
@@ -1632,7 +1636,7 @@ async function callApi(action, data = {}) {
 }
 
 /* ════════════════════════════════════════════════════════════════
-   AUTH
+   AUTH — Flujo de 2 pasos
    ════════════════════════════════════════════════════════════════ */
 function loadUserFromStorage() {
   try {
@@ -1647,29 +1651,24 @@ function saveUserToStorage(user) {
 }
 
 function logout() {
-  if (!confirm('¿Salir del prode? Tus pronósticos quedan guardados, podés volver a entrar con el mismo email.')) return;
+  if (!confirm('¿Salir del prode? Tus pronósticos quedan guardados, podés volver a entrar con tu email.')) return;
   localStorage.removeItem('prodezeta_user');
   currentUser = null;
   document.getElementById('app').classList.remove('active');
   document.getElementById('welcomeScreen').style.display = 'flex';
+  backToStep1();
   window.scrollTo(0, 0);
 }
 
-async function registerUser() {
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName = document.getElementById('lastName').value.trim();
+/* STEP 1 — Solo verifica el email */
+async function checkEmail() {
   const email = document.getElementById('email').value.trim().toLowerCase();
-  const accept = document.getElementById('acceptTerms').checked;
   const errorEl = document.getElementById('emailError');
-  const btn = document.getElementById('registerBtn');
+  const btn = document.getElementById('continueBtn');
 
   errorEl.classList.remove('show');
   document.getElementById('email').classList.remove('error');
-  document.getElementById('firstName').classList.remove('error');
-  document.getElementById('lastName').classList.remove('error');
 
-  if (!firstName) { document.getElementById('firstName').classList.add('error'); return; }
-  if (!lastName)  { document.getElementById('lastName').classList.add('error'); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     document.getElementById('email').classList.add('error');
     errorEl.classList.add('show');
@@ -1677,20 +1676,70 @@ async function registerUser() {
   }
 
   btn.disabled = true;
-  btn.innerHTML = '<span class="loading-spinner"></span>INGRESANDO...';
+  btn.innerHTML = '<span class="loading-spinner"></span>VERIFICANDO...';
+
+  try {
+    // Llamamos registerOrLogin solo con email — el backend sabe si existe o no
+    const result = await callApi('registerOrLogin', { email });
+
+    if (result.exists === false) {
+      // Usuario nuevo → mostrar step 2
+      document.getElementById('emailDisplay').textContent = email;
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+      setTimeout(() => document.getElementById('firstName').focus(), 100);
+    } else if (result.user) {
+      // Usuario existente → entra directo
+      currentUser = result.user;
+      saveUserToStorage(currentUser);
+      enterApp();
+      showToast('👋 Bienvenido/a de vuelta, ' + currentUser.nombre + '!');
+    }
+  } catch (err) {
+    // Error de red o servidor
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = 'CONTINUAR →';
+}
+
+/* STEP 2 — Registra nuevo usuario */
+async function registerUser() {
+  const email    = document.getElementById('email').value.trim().toLowerCase();
+  const firstName= document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  const accept   = document.getElementById('acceptTerms').checked;
+  const btn      = document.getElementById('registerBtn');
+
+  document.getElementById('firstName').classList.remove('error');
+  document.getElementById('lastName').classList.remove('error');
+
+  if (!firstName) { document.getElementById('firstName').classList.add('error'); return; }
+  if (!lastName)  { document.getElementById('lastName').classList.add('error');  return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>REGISTRANDO...';
 
   try {
     const result = await callApi('registerOrLogin', {
       email, nombre: firstName, apellido: lastName, acepta_terminos: accept
     });
-    currentUser = result.user;
-    saveUserToStorage(currentUser);
-    enterApp();
-    showToast(result.isNew ? '🎉 ¡Bienvenido/a al prode!' : '👋 Bienvenido/a de vuelta');
-  } catch (err) {
-    btn.disabled = false;
-    btn.innerHTML = 'ENTRAR AL PRODE';
-  }
+    if (result.user) {
+      currentUser = result.user;
+      saveUserToStorage(currentUser);
+      enterApp();
+      showToast('🎉 ¡Bienvenido/a al prode, ' + currentUser.nombre + '!');
+    }
+  } catch (err) {}
+
+  btn.disabled = false;
+  btn.innerHTML = 'REGISTRARME Y ENTRAR';
+}
+
+function backToStep1() {
+  document.getElementById('step2').classList.add('hidden');
+  document.getElementById('step1').classList.remove('hidden');
+  setTimeout(() => document.getElementById('email').focus(), 100);
 }
 
 function enterApp() {
@@ -1699,6 +1748,99 @@ function enterApp() {
   document.getElementById('userName').textContent = currentUser.nombre;
   document.getElementById('userAvatar').textContent = (currentUser.nombre[0] || '?').toUpperCase();
   loadInitialData();
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FONDO ANIMADO DEL WELCOME — Circuit + Partículas
+   ════════════════════════════════════════════════════════════════ */
+function initWelcomeBg() {
+  createCircuitBg();
+  createParticles();
+}
+
+function createCircuitBg() {
+  const canvas = document.createElement('canvas');
+  const S = 300;
+  canvas.width = S; canvas.height = S;
+  const ctx = canvas.getContext('2d');
+
+  const c1 = 'rgba(112,48,160,0.85)';
+  const c2 = 'rgba(28,137,175,0.75)';
+  const c3 = 'rgba(250,65,204,0.55)';
+
+  ctx.strokeStyle = c1; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+
+  // Segmentos de circuito ortogonales
+  const segs = [
+    [0,40,75,40],[75,40,75,10],[75,10,160,10],[160,10,160,40],[160,40,300,40],
+    [0,130,45,130],[45,130,45,75],[45,75,125,75],[125,75,125,130],[125,130,300,130],
+    [95,0,95,40],[95,130,95,195],[95,195,55,195],[55,195,55,300],
+    [190,40,190,75],[190,75,265,75],[265,75,265,0],
+    [190,130,190,195],[190,195,255,195],[255,195,255,300],
+    [0,215,28,215],[28,215,28,300],
+    [125,195,125,255],[125,255,190,255],
+    [155,300,155,240],[155,240,225,240],[225,240,225,300],
+    [300,90,240,90],[240,90,240,130],[240,130,300,130],
+  ];
+
+  segs.forEach(([x1,y1,x2,y2]) => {
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+  });
+
+  // Pads circulares (nodos)
+  ctx.fillStyle = c1;
+  [[75,40],[160,40],[45,130],[125,75],[125,130],[95,40],[95,130],
+   [190,75],[190,130],[55,195],[95,195],[190,195],[255,195],[28,215],
+   [125,195],[125,255],[155,240],[225,240],[240,90],[240,130]
+  ].forEach(([x,y]) => {
+    ctx.beginPath(); ctx.arc(x,y,3.5,0,Math.PI*2); ctx.fill();
+  });
+
+  // Chips rectangulares (IC accent)
+  ctx.fillStyle = c2;
+  [[76,5,87,9],[45,70,84,9],[190,70,78,9],[240,85,55,9]].forEach(([x,y,w,h]) => {
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(x,y,w,h,2) : ctx.rect(x,y,w,h);
+    ctx.fill();
+  });
+
+  // Accent fuchsia en algunos nodos
+  ctx.fillStyle = c3;
+  [[160,40],[190,75],[125,255]].forEach(([x,y]) => {
+    ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fill();
+  });
+
+  const dataUrl = canvas.toDataURL('image/png');
+  document.getElementById('circuitLayer').style.backgroundImage = `url(${dataUrl})`;
+}
+
+function createParticles() {
+  const container = document.getElementById('particlesLayer');
+  for (let i = 0; i < 32; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size    = Math.random() * 2.5 + 0.8;
+    const x       = Math.random() * 100;
+    const y       = Math.random() * 100;
+    const dur     = Math.random() * 18 + 12;
+    const delay   = -(Math.random() * 30);
+    const op      = (Math.random() * 0.35 + 0.08).toFixed(2);
+    const dx      = (Math.random() * 40 - 20).toFixed(1);
+    const dy      = -(Math.random() * 60 + 25);
+    // color: mezcla púrpura/fuchsia/teal
+    const colors  = ['rgba(186,149,193,','rgba(250,65,204,','rgba(122,169,213,','rgba(255,255,255,'];
+    const col     = colors[Math.floor(Math.random() * colors.length)];
+
+    p.style.cssText = `
+      left:${x}%; top:${y}%;
+      width:${size}px; height:${size}px;
+      background:${col}${op});
+      animation-duration:${dur}s;
+      animation-delay:${delay}s;
+      --dx:${dx}px; --dy:${dy}px; --op:${op};
+    `;
+    container.appendChild(p);
+  }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -2080,6 +2222,7 @@ function renderTabla(tabla) {
    INIT
    ════════════════════════════════════════════════════════════════ */
 (function init() {
+  initWelcomeBg();
   const stored = loadUserFromStorage();
   if (stored && stored.email) {
     currentUser = stored;
@@ -2087,10 +2230,9 @@ function renderTabla(tabla) {
   } else {
     document.getElementById('welcomeScreen').style.display = 'flex';
   }
-
-  // Enter key in welcome form
+  // Enter en el campo email del step 1
   document.getElementById('email').addEventListener('keydown', e => {
-    if (e.key === 'Enter') registerUser();
+    if (e.key === 'Enter') checkEmail();
   });
 })();
 </script>
