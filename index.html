@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prode Mundial 2026 — Somos Zeta</title>
+<meta name="description" content="Prode Mundial 2026 de Somos Zeta Digital Advice. Jugá, predecí los resultados y ganá un voucher para Academia Zeta.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400&family=Barlow+Condensed:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --purple:       #7030a0;
+    --purple-dark:  #5a2580;
+    --purple-light: #8d4dbb;
+    --purple-mid:   #ba95c1;
+    --purple-pale:  #e7daeb;
+    --teal:         #1c89af;
+    --sky:          #7aa9d5;
+    --fuchsia:      #fa41cc;
+    --carbon:       #2d2b2c;
+    --carbon-soft:  #3a3739;
+    --white:        #ffffff;
+    --off-white:    #faf8fc;
+    --gray-light:   #f0eaf4;
+    --gray-mid:     #c0b5cc;
+    --gray-text:    #6a6470;
+    --border:       #e0d5e8;
+    --gold:         #d4a836;
+    --silver:       #9c9ca8;
+    --bronze:       #b87333;
+    --green-ok:     #2d8a4e;
+    --red-err:      #c0392b;
+    --shadow-sm:    0 2px 8px rgba(112,48,160,0.08);
+    --shadow:       0 4px 24px rgba(112,48,160,0.10);
+    --shadow-lg:    0 8px 40px rgba(45,43,44,0.16);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--off-white);
+    color: var(--carbon);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     WELCOME / LOGIN
+     ════════════════════════════════════════════════════════════════ */
+  #welcomeScreen {
+    min-height: 100vh;
+    background: var(--carbon);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #welcomeScreen::before {
+    content: 'Z';
+    position: absolute;
+    top: -120px; right: -80px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 700px;
+    font-weight: 900;
+    color: rgba(112,48,160,0.07);
+    line-height: 0.85;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  #welcomeScreen::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -150px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(112,48,160,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .welcome-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .z-mark {
+    width: 56px;
+    height: 56px;
+    background: var(--purple);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 24px rgba(112,48,160,0.5);
+  }
+
+  .z-mark span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .welcome-brand-text .name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .welcome-brand-text .tagline {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--purple-light);
+    margin-top: 3px;
+  }
+
+  .welcome-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 76px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 0.92;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+  }
+
+  .welcome-title span { color: var(--purple-light); }
+
+  .welcome-sub {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .welcome-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 2;
+    border-top: 5px solid var(--purple);
+  }
+
+  .welcome-card h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--carbon);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+
+  .welcome-card .lead {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gray-text);
+    margin-bottom: 24px;
+  }
+
+  .welcome-card .prize-hint {
+    background: linear-gradient(135deg, var(--purple-pale), #fff);
+    border-left: 3px solid var(--purple);
+    padding: 12px 14px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: var(--carbon);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .welcome-card .prize-hint strong { color: var(--purple); }
+
+  .form-row {
+    margin-bottom: 16px;
+  }
+
+  .form-row.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .form-row label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--carbon);
+    margin-bottom: 6px;
+  }
+
+  .form-row input[type="text"],
+  .form-row input[type="email"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: var(--carbon);
+    background: var(--off-white);
+    transition: all 0.15s;
+  }
+
+  .form-row input:focus {
+    outline: none;
+    border-color: var(--purple);
+    background: #fff;
+  }
+
+  .form-row input.error {
+    border-color: var(--red-err);
+    background: #fff5f5;
+  }
+
+  .form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color: var(--gray-text);
+    line-height: 1.5;
+  }
+
+  .form-checkbox input { margin-top: 2px; cursor: pointer; accent-color: var(--purple); }
+
+  .btn-primary {
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--purple);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 4px 14px rgba(112,48,160,0.3);
+  }
+
+  .btn-primary:hover { background: var(--purple-dark); transform: translateY(-1px); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { background: var(--gray-mid); cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .welcome-footer {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--gray-text);
+  }
+
+  .form-error {
+    color: var(--red-err);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 6px;
+    display: none;
+  }
+
+  .form-error.show { display: block; }
+
+  /* ════════════════════════════════════════════════════════════════
+     APP (DASHBOARD)
+     ════════════════════════════════════════════════════════════════ */
+  #app { display: none; }
+  #app.active { display: block; }
+
+  /* HEADER */
+  .site-header {
+    background: var(--carbon);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-top-bar {
+    background: var(--purple);
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .header-top-bar span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .header-main {
+    padding: 22px 24px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: relative;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .header-brand .z-mark { width: 48px; height: 48px; box-shadow: 0 2px 12px rgba(112,48,160,0.4); }
+  .header-brand .z-mark span { font-size: 32px; }
+
+  .header-title h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 1px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .header-title h1 span { color: var(--purple-light); }
+
+  .header-title .subtitle {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-top: 4px;
+  }
+
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 6px 14px 6px 6px;
+    border-radius: 30px;
+  }
+
+  .user-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--purple);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .user-info { line-height: 1.2; }
+  .user-info .name { font-size: 12px; font-weight: 600; color: #fff; }
+  .user-info .logout {
+    font-size: 10px; color: var(--purple-light);
+    cursor: pointer; letter-spacing: 1px; text-transform: uppercase;
+    background: none; border: none; padding: 0; font-family: inherit;
+  }
+  .user-info .logout:hover { color: #fff; }
+
+  /* TABS */
+  .nav-tabs {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    scrollbar-width: thin;
+  }
+
+  .nav-tabs::-webkit-scrollbar { height: 0; }
+
+  .tab-btn {
+    padding: 16px 18px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gray-text);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn:hover { color: var(--purple); }
+
+  .tab-btn.active {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+  }
+
+  /* PANELS */
+  .panel { display: none; padding: 28px 24px 48px; max-width: 1280px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  .panel-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  .panel-sub {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-text);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     PANEL: REGLAS
+     ════════════════════════════════════════════════════════════════ */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .rule-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px 20px;
+    box-shadow: var(--shadow-sm);
+    border-top: 4px solid var(--purple);
+  }
+
+  .rule-card.acc-gold { border-top-color: var(--gold); }
+  .rule-card.acc-teal { border-top-color: var(--teal); }
+  .rule-card.acc-gray { border-top-color: var(--gray-mid); }
+
+  .rule-pts {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 54px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--purple);
+  }
+  .rule-card.acc-gold .rule-pts { color: var(--gold); }
+  .rule-card.acc-teal .rule-pts { color: var(--teal); }
+  .rule-card.acc-gray .rule-pts { color: var(--gray-mid); }
+
+  .rule-pts-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--gray-mid); margin-bottom: 12px; text-transform: uppercase; }
+  .rule-name { font-weight: 700; font-size: 14px; color: var(--carbon); margin-bottom: 6px; }
+  .rule-desc { font-size: 12px; color: var(--gray-text); line-height: 1.55; }
+
+  .phases-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .phase-pill {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 16px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .phase-pill h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .phase-pill p { font-size: 12px; color: var(--gray-text); line-height: 1.55; }
+  .phase-pill p strong { color: var(--carbon); }
+
+  .reglamento-list { background: #fff; border-radius: 10px; box-shadow: var(--shadow-sm); overflow: hidden; }
+  .reg-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+  .reg-item:last-child { border-bottom: none; }
+  .reg-num { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--purple); min-width: 32px; line-height: 1; }
+  .reg-text { font-size: 13px; color: var(--gray-text); line-height: 1.65; }
+  .reg-text strong { color: var(--carbon); }
+
+  .prize-cta {
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 24px 24px;
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prize-cta::before {
+    content: 'Z';
+    position: absolute;
+    top: -40px; right: -20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 220px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.08);
+    line-height: 0.85;
+    pointer-events: none;
+  }
+
+  .prize-cta-icon { font-size: 40px; flex-shrink: 0; }
+  .prize-cta-text { flex: 1; min-width: 200px; position: relative; z-index: 2; }
+  .prize-cta-text h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; text-transform: uppercase; }
+  .prize-cta-text p { font-size: 13px; opacity: 0.85; line-height: 1.5; }
+  .prize-cta-text strong { color: #fff; }
+
+  .prize-cta-btn {
+    background: #fff;
+    color: var(--purple);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 22px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    z-index: 2;
+  }
+
+  .prize-cta-btn:hover { background: var(--purple-pale); }
+
+  /* ════════════════════════════════════════════════════════════════
+     PANEL: PRONÓSTICOS / RESULTADOS
+     ════════════════════════════════════════════════════════════════ */
+  .selector-bar {
+    background: #fff;
+    border-radius: 10px;
+    padding: 14px 18px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .phase-filter {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .phase-filter-btn {
+    padding: 7px 14px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: #fff;
+    color: var(--gray-text);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Barlow', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .phase-filter-btn:hover { color: var(--purple); border-color: var(--purple); }
+  .phase-filter-btn.active {
+    background: var(--purple);
+    color: #fff;
+    border-color: var(--purple);
+  }
+
+  .matches-section { margin-bottom: 22px; }
+
+  .matches-section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    background: var(--purple);
+    padding: 10px 16px;
+    border-radius: 8px 8px 0 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .matches-section-title.semis { background: var(--fuchsia); }
+  .matches-section-title.final { background: linear-gradient(90deg, var(--purple), var(--fuchsia)); }
+  .matches-section-title.octavos { background: var(--teal); }
+  .matches-section-title.dieciseisavos { background: var(--sky); }
+  .matches-section-title.cuartos { background: var(--purple-dark); }
+
+  .matches-section-title .badge-doble { font-size: 10px; opacity: 0.9; font-family: 'Barlow', sans-serif; letter-spacing: 2px; }
+
+  .matches-table-wrap {
+    background: #fff;
+    border-radius: 0 0 8px 8px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .match-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px 40px 40px 1fr 90px;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+
+  .match-row:last-child { border-bottom: none; }
+  .match-row:hover { background: var(--off-white); }
+
+  .match-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-mid);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .match-num .date { display: block; font-size: 9px; color: var(--gray-mid); font-family: 'Barlow', sans-serif; font-weight: 500; }
+
+  .match-team { font-weight: 600; font-size: 13px; color: var(--carbon); }
+  .match-team.home { text-align: right; }
+  .match-team.away { text-align: left; }
+  .match-team.empty { color: var(--gray-mid); font-style: italic; font-weight: 400; }
+
+  .score-input {
+    width: 38px;
+    height: 38px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--carbon);
+    background: var(--off-white);
+    transition: all 0.15s;
+    -moz-appearance: textfield;
+  }
+
+  .score-input:focus {
+    outline: none;
+    border-color: var(--purple);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(112,48,160,0.15);
+  }
+  .score-input::-webkit-inner-spin-button,
+  .score-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  .score-input:disabled { background: var(--gray-light); color: var(--gray-text); cursor: not-allowed; }
+
+  .score-input.locked { background: var(--purple-pale); border-color: var(--purple-mid); color: var(--purple-dark); }
+
+  .score-dash { text-align: center; font-weight: 700; color: var(--gray-mid); font-size: 16px; }
+
+  .match-pts-badge {
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    min-width: 60px;
+  }
+
+  .match-pts-badge.pending { color: var(--gray-mid); font-size: 11px; font-family: 'Barlow', sans-serif; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .pts-3 { color: var(--gold); }
+  .pts-1 { color: var(--green-ok); }
+  .pts-0 { color: var(--gray-mid); }
+  .pts-doble { color: var(--fuchsia); }
+
+  .save-all-bar {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+
+  .save-status {
+    font-size: 12px;
+    color: var(--gray-text);
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     PANEL: TABLA DE POSICIONES
+     ════════════════════════════════════════════════════════════════ */
+  .podium-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .podium-card {
+    border-radius: 12px;
+    padding: 22px 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .podium-card.p1 { background: linear-gradient(135deg, #fff8e1, #fff3cd); border: 2px solid var(--gold); }
+  .podium-card.p2 { background: linear-gradient(135deg, #f5f5f5, #ebebeb); border: 2px solid var(--silver); }
+  .podium-card.p3 { background: linear-gradient(135deg, #fff5e6, #ffecd0); border: 2px solid var(--bronze); }
+  .podium-card.empty { background: var(--off-white); border: 2px dashed var(--border); }
+
+  .podium-icon { font-size: 36px; margin-bottom: 6px; }
+  .podium-rank {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gray-text);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .podium-name { font-weight: 700; font-size: 14px; color: var(--carbon); margin-bottom: 6px; min-height: 36px; display: flex; align-items: center; justify-content: center; }
+  .podium-pts { font-family: 'Barlow Condensed', sans-serif; font-size: 34px; font-weight: 900; line-height: 1; }
+  .podium-pts span { font-size: 13px; font-family: 'Barlow', sans-serif; font-weight: 600; }
+  .p1 .podium-pts { color: var(--gold); }
+  .p2 .podium-pts { color: var(--silver); }
+  .p3 .podium-pts { color: var(--bronze); }
+  .empty .podium-pts { color: var(--gray-mid); }
+
+  .ranking-wrap {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .ranking-header {
+    display: grid;
+    grid-template-columns: 50px 1fr 80px 80px 80px;
+    padding: 12px 18px;
+    background: var(--carbon);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    gap: 8px;
+  }
+
+  .ranking-header div:not(:first-child):not(:nth-child(2)) { text-align: center; }
+
+  .ranking-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 80px 80px 80px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    gap: 8px;
+    transition: background 0.1s;
+  }
+
+  .ranking-row.me { background: var(--purple-pale); }
+  .ranking-row:last-child { border-bottom: none; }
+  .ranking-row:hover { background: var(--off-white); }
+  .ranking-row.me:hover { background: #ddc5e4; }
+
+  .rank-pos {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gray-mid);
+  }
+
+  .rank-pos.gold { color: var(--gold); }
+  .rank-pos.silver { color: var(--silver); }
+  .rank-pos.bronze { color: var(--bronze); }
+
+  .rank-name { font-weight: 600; font-size: 13px; }
+  .rank-name .me-tag { display: inline-block; background: var(--purple); color: #fff; font-size: 9px; padding: 2px 6px; border-radius: 4px; margin-left: 6px; letter-spacing: 1px; vertical-align: middle; font-weight: 700; }
+  .rank-cell { text-align: center; font-size: 13px; }
+  .rank-pts { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: var(--purple); text-align: center; }
+  .rank-exact { color: var(--gold); font-weight: 700; }
+  .rank-winner { color: var(--green-ok); font-weight: 700; }
+
+  /* ════════════════════════════════════════════════════════════════
+     PANEL: PREMIOS
+     ════════════════════════════════════════════════════════════════ */
+  .premio-hero {
+    background: linear-gradient(135deg, var(--carbon) 0%, var(--purple-dark) 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 40px 36px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .premio-hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(250,65,204,0.25) 0%, transparent 70%);
+  }
+
+  .premio-hero-content { position: relative; z-index: 2; }
+  .premio-hero-label { font-size: 11px; font-weight: 700; letter-spacing: 4px; color: var(--purple-light); text-transform: uppercase; margin-bottom: 14px; }
+  .premio-hero h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .premio-hero h2 span { color: var(--fuchsia); }
+  .premio-hero .desc { font-size: 16px; line-height: 1.6; opacity: 0.85; max-width: 600px; margin: 0 auto; }
+
+  .premio-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .premio-tier {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 20px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border-top: 5px solid var(--purple);
+  }
+
+  .premio-tier.gold { border-top-color: var(--gold); }
+  .premio-tier.silver { border-top-color: var(--silver); }
+  .premio-tier.bronze { border-top-color: var(--bronze); }
+
+  .premio-tier-icon { font-size: 38px; margin-bottom: 6px; }
+  .premio-tier-pos {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-text);
+    margin-bottom: 4px;
+  }
+  .premio-tier-prize {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--carbon);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+  .premio-tier-desc { font-size: 12px; color: var(--gray-text); line-height: 1.5; }
+
+  .premio-all {
+    background: var(--purple-pale);
+    border: 2px solid var(--purple);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .premio-all-icon { font-size: 48px; flex-shrink: 0; }
+  .premio-all-text { flex: 1; min-width: 200px; }
+  .premio-all-text h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .premio-all-text p { font-size: 14px; color: var(--carbon); line-height: 1.6; }
+  .premio-all-text p strong { color: var(--purple-dark); }
+
+  .premio-social {
+    background: var(--carbon);
+    color: #fff;
+    border-radius: 12px;
+    padding: 28px 28px;
+    text-align: center;
+  }
+
+  .premio-social h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .premio-social h3 span { color: var(--fuchsia); }
+
+  .premio-social p { font-size: 14px; color: rgba(255,255,255,0.7); margin-bottom: 18px; line-height: 1.6; max-width: 540px; margin-left: auto; margin-right: auto; }
+
+  .social-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .social-link:hover { background: var(--purple); border-color: var(--purple); }
+
+  /* ════════════════════════════════════════════════════════════════
+     PANEL: SOBRE NOSOTROS
+     ════════════════════════════════════════════════════════════════ */
+  .about-hero {
+    background: #fff;
+    border-radius: 12px;
+    padding: 36px 32px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 22px;
+    border-top: 5px solid var(--purple);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-hero::before {
+    content: 'Z';
+    position: absolute;
+    bottom: -80px; right: -40px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 320px;
+    font-weight: 900;
+    color: var(--purple-pale);
+    line-height: 0.85;
+    pointer-events: none;
+  }
+
+  .about-hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .about-tagline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--carbon);
+    line-height: 1;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .about-tagline span { color: var(--purple); }
+
+  .about-lead {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--gray-text);
+    margin-bottom: 20px;
+  }
+
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .pilar-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow-sm);
+    border-left: 3px solid var(--purple);
+  }
+
+  .pilar-card.teal { border-left-color: var(--teal); }
+  .pilar-card.fuchsia { border-left-color: var(--fuchsia); }
+  .pilar-card.gold { border-left-color: var(--gold); }
+
+  .pilar-card h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .pilar-card.teal h4 { color: var(--teal); }
+  .pilar-card.fuchsia h4 { color: var(--fuchsia); }
+  .pilar-card.gold h4 { color: var(--gold); }
+
+  .pilar-card p { font-size: 12px; color: var(--gray-text); line-height: 1.55; }
+
+  .servicios-cta {
+    background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+    color: #fff;
+    border-radius: 12px;
+    padding: 28px 28px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+
+  .servicios-cta h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .servicios-cta p { font-size: 14px; opacity: 0.85; margin-bottom: 18px; max-width: 540px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+
+  .btn-light {
+    display: inline-block;
+    background: #fff;
+    color: var(--purple);
+    text-decoration: none;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+  .btn-light:hover { background: var(--purple-pale); transform: translateY(-1px); }
+
+  .contact-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px 28px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .contact-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--carbon);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .contact-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .contact-item { font-size: 13px; color: var(--gray-text); }
+  .contact-item label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--purple); margin-bottom: 4px; }
+  .contact-item a { color: var(--carbon); text-decoration: none; font-weight: 600; }
+  .contact-item a:hover { color: var(--purple); }
+
+  /* ════════════════════════════════════════════════════════════════
+     COMMON
+     ════════════════════════════════════════════════════════════════ */
+  .empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--gray-mid);
+    font-size: 14px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .empty-state .big { font-size: 44px; margin-bottom: 12px; }
+
+  .loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  .loading-spinner.dark {
+    border-color: rgba(112,48,160,0.2);
+    border-top-color: var(--purple);
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .loading-full {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+    color: var(--gray-text);
+    font-size: 13px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .loading-full .spinner {
+    width: 32px; height: 32px;
+    border: 3px solid var(--gray-light);
+    border-top-color: var(--purple);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--green-ok);
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: var(--shadow-lg);
+    z-index: 999;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    max-width: calc(100vw - 48px);
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.error { background: var(--red-err); }
+
+  /* ════════════════════════════════════════════════════════════════
+     RESPONSIVE
+     ════════════════════════════════════════════════════════════════ */
+  @media (max-width: 700px) {
+    .panel { padding: 20px 14px 40px; }
+    .panel-title { font-size: 24px; }
+    .welcome-title { font-size: 48px; }
+    .header-main { padding: 16px 14px 14px; gap: 12px; }
+    .header-title h1 { font-size: 22px; }
+    .header-title .subtitle { font-size: 9px; letter-spacing: 2px; }
+    .nav-tabs { padding: 0 8px; }
+    .tab-btn { padding: 14px 12px; font-size: 10px; letter-spacing: 1px; }
+    .match-row { grid-template-columns: 36px 1fr 36px 32px 36px 1fr 60px; gap: 4px; padding: 10px 8px; }
+    .match-team { font-size: 12px; }
+    .match-pts-badge { font-size: 18px; min-width: 50px; }
+    .ranking-header, .ranking-row { grid-template-columns: 40px 1fr 60px; gap: 6px; padding: 10px 12px; }
+    .ranking-header div:nth-child(4), .ranking-row div:nth-child(4),
+    .ranking-header div:nth-child(5), .ranking-row div:nth-child(5) { display: none; }
+    .podium-banner { grid-template-columns: 1fr; gap: 10px; }
+    .premio-hero h2 { font-size: 36px; }
+    .premio-hero { padding: 28px 22px; }
+    .about-tagline { font-size: 26px; }
+    .prize-cta { padding: 20px; gap: 14px; }
+    .prize-cta-icon { font-size: 32px; }
+    .prize-cta-text h3 { font-size: 18px; }
+    .welcome-card { padding: 28px 22px; }
+    .form-row.split { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════════
+     WELCOME SCREEN (REGISTRO / LOGIN)
+     ════════════════════════════════════════════════════════════════ -->
+<div id="welcomeScreen">
+  <div class="welcome-brand">
+    <div class="z-mark"><span>Z</span></div>
+    <div class="welcome-brand-text">
+      <div class="name">SOMOS ZETA</div>
+      <div class="tagline">DIGITAL ADVICE</div>
+    </div>
+  </div>
+
+  <div class="welcome-title">PRODE <span>MUNDIAL</span><br>2026</div>
+  <div class="welcome-sub">Tecnología que ACERCA · Soluciones que TRANSFORMAN</div>
+
+  <div class="welcome-card">
+    <h2>Sumate al prode</h2>
+    <p class="lead">Predecí los resultados del Mundial 2026 y participá del ranking de Somos Zeta.</p>
+
+    <div class="prize-hint">
+      🏆 <strong>Premio mayor:</strong> Voucher para un curso completo en <strong>Academia Zeta</strong>, nuestra plataforma de Inteligencia Artificial.
+    </div>
+
+    <form id="registerForm" onsubmit="return false;">
+      <div class="form-row split">
+        <div>
+          <label for="firstName">Nombre</label>
+          <input type="text" id="firstName" autocomplete="given-name" required>
+        </div>
+        <div>
+          <label for="lastName">Apellido</label>
+          <input type="text" id="lastName" autocomplete="family-name" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" required placeholder="tu@email.com">
+        <div class="form-error" id="emailError">Ingresá un email válido</div>
+      </div>
+
+      <div class="form-checkbox">
+        <input type="checkbox" id="acceptTerms" checked>
+        <label for="acceptTerms" style="cursor:pointer; font-size:12px; font-weight:400; letter-spacing:0; text-transform:none; color:var(--gray-text); margin:0;">
+          Acepto recibir comunicaciones de Somos Zeta sobre el prode y Academia Zeta.
+        </label>
+      </div>
+
+      <button type="submit" class="btn-primary" id="registerBtn" onclick="registerUser()">
+        ENTRAR AL PRODE
+      </button>
+    </form>
+
+    <div class="welcome-footer">
+      ¿Ya jugaste antes? Ingresá con el mismo email.
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     APP (POST-LOGIN)
+     ════════════════════════════════════════════════════════════════ -->
+<div id="app">
+
+  <!-- HEADER -->
+  <div class="site-header">
+    <div class="header-top-bar">
+      <span>SOMOS ZETA DIGITAL ADVICE · Esperanza, Santa Fe</span>
+      <span>⚽ MUNDIAL FIFA 2026 · USA · CANADA · MEXICO</span>
+    </div>
+    <div class="header-main">
+      <div class="header-brand">
+        <div class="z-mark"><span>Z</span></div>
+        <div class="header-title">
+          <h1>PRODE <span>MUNDIAL</span> 2026</h1>
+          <div class="subtitle">Tecnología que ACERCA · Soluciones que TRANSFORMAN</div>
+        </div>
+      </div>
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">L</div>
+        <div class="user-info">
+          <div class="name" id="userName">Leonardo</div>
+          <button class="logout" onclick="logout()">Salir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab('reglas', this)">📋 Cómo se juega</button>
+    <button class="tab-btn" onclick="showTab('pronosticos', this)">⚽ Mis Pronósticos</button>
+    <button class="tab-btn" onclick="showTab('tabla', this)">🏆 Tabla</button>
+    <button class="tab-btn" onclick="showTab('resultados', this)">🎯 Resultados</button>
+    <button class="tab-btn" onclick="showTab('premios', this)">🎁 Premios</button>
+    <button class="tab-btn" onclick="showTab('somos-zeta', this)">💼 Somos Zeta</button>
+  </div>
+
+  <!-- ════════════ PANEL: REGLAS ════════════ -->
+  <div id="tab-reglas" class="panel active">
+    <div class="panel-title">Cómo se juega</div>
+    <div class="panel-sub">SISTEMA DE PUNTUACIÓN · FASES · REGLAMENTO</div>
+
+    <div class="rules-grid">
+      <div class="rule-card acc-gold">
+        <div class="rule-pts">3</div>
+        <div class="rule-pts-label">puntos</div>
+        <div class="rule-name">⭐ Resultado exacto</div>
+        <div class="rule-desc">Pronosticaste el marcador exacto. Ej: dijiste 2–1 y terminó 2–1.</div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-pts">1</div>
+        <div class="rule-pts-label">punto</div>
+        <div class="rule-name">✅ Ganador correcto</div>
+        <div class="rule-desc">Acertaste quién ganó (o el empate) pero no los goles exactos.</div>
+      </div>
+      <div class="rule-card acc-teal">
+        <div class="rule-pts">+1</div>
+        <div class="rule-pts-label">bonus</div>
+        <div class="rule-name">🎯 Empate exacto</div>
+        <div class="rule-desc">Si acertás un empate con marcador exacto, sumás 1 punto extra.</div>
+      </div>
+      <div class="rule-card acc-gray">
+        <div class="rule-pts">0</div>
+        <div class="rule-pts-label">puntos</div>
+        <div class="rule-name">❌ Sin acierto</div>
+        <div class="rule-desc">No acertaste ganador ni resultado, o no enviaste tu pronóstico a tiempo.</div>
+      </div>
+    </div>
+
+    <div class="panel-title" style="font-size:22px; margin-bottom:10px;">Fases del torneo</div>
+    <div class="phases-row">
+      <div class="phase-pill">
+        <h4>🌎 Fase de grupos</h4>
+        <p><strong>72 partidos</strong> · 12 grupos (A–L)<br>Sistema estándar: 3 / 1 / 0 pts.<br>Pronóstico antes del pitazo.</p>
+      </div>
+      <div class="phase-pill">
+        <h4>⚔️ 16avos, Octavos y Cuartos</h4>
+        <p><strong>28 partidos</strong> (16+8+4)<br>Sistema estándar.<br>Si hay penales, cuenta el resultado hasta los 120'.</p>
+      </div>
+      <div class="phase-pill">
+        <h4>🔥 Semis y Final</h4>
+        <p><strong>3 partidos — PUNTOS DOBLES</strong><br>6 pts exacto / 2 pts ganador.<br>Bonus empate +2 pts.</p>
+      </div>
+    </div>
+
+    <div class="panel-title" style="font-size:22px; margin-bottom:10px;">Reglamento</div>
+    <div class="reglamento-list">
+      <div class="reg-item"><div class="reg-num">01</div><div class="reg-text"><strong>Pronóstico antes del pitazo inicial.</strong> Una vez que empieza el partido, el pronóstico queda cerrado. Sin pronóstico cargado = 0 puntos.</div></div>
+      <div class="reg-item"><div class="reg-num">02</div><div class="reg-text"><strong>Podés modificar tu pronóstico</strong> tantas veces como quieras hasta el inicio del partido.</div></div>
+      <div class="reg-item"><div class="reg-num">03</div><div class="reg-text"><strong>En eliminación directa</strong> el resultado que cuenta es el del tiempo reglamentario + prórroga (90' + 30'). Los penales <strong>no cuentan como goles.</strong></div></div>
+      <div class="reg-item"><div class="reg-num">04</div><div class="reg-text"><strong>Semis y Final:</strong> los puntos se duplican. Es la fase donde el ranking puede dar vuelta por completo.</div></div>
+      <div class="reg-item"><div class="reg-num">05</div><div class="reg-text"><strong>Desempate:</strong> si dos jugadores terminan con el mismo puntaje, gana quien acertó más marcadores exactos. Si persiste, quien acertó más ganadores.</div></div>
+      <div class="reg-item"><div class="reg-num">06</div><div class="reg-text"><strong>Premios:</strong> 🥇 1°, 🥈 2° y 🥉 3° reciben voucher para Academia Zeta. <strong>Todos los participantes</strong> reciben Kit de Iniciación Digital en IA.</div></div>
+      <div class="reg-item"><div class="reg-num">07</div><div class="reg-text"><strong>Los ganadores se anuncian SOLO en redes sociales</strong> de Somos Zeta. Seguinos en Instagram y LinkedIn para enterarte.</div></div>
+    </div>
+
+    <div class="prize-cta">
+      <div class="prize-cta-icon">🏆</div>
+      <div class="prize-cta-text">
+        <h3>El premio: Academia Zeta</h3>
+        <p>Voucher para un <strong>curso completo gratuito</strong> en nuestra plataforma de Inteligencia Artificial aplicada. Lanzamiento: <strong>julio 2026</strong>.</p>
+      </div>
+      <button class="prize-cta-btn" onclick="showTab('premios', document.querySelectorAll('.tab-btn')[4])">Ver premios →</button>
+    </div>
+  </div>
+
+  <!-- ════════════ PANEL: PRONÓSTICOS ════════════ -->
+  <div id="tab-pronosticos" class="panel">
+    <div class="panel-title">Mis Pronósticos</div>
+    <div class="panel-sub">CARGÁ TUS PREDICCIONES · PUEDEN MODIFICARSE HASTA EL INICIO DE CADA PARTIDO</div>
+
+    <div class="selector-bar">
+      <div class="phase-filter" id="phaseFilterProno">
+        <button class="phase-filter-btn active" onclick="filterPhaseProno('all', this)">Todos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseProno('grupos', this)">Grupos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseProno('dieciseisavos', this)">16avos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseProno('octavos', this)">Octavos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseProno('cuartos', this)">Cuartos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseProno('semis', this)">Semis</button>
+        <button class="phase-filter-btn" onclick="filterPhaseProno('final', this)">Final</button>
+      </div>
+    </div>
+
+    <div id="pronoFormArea">
+      <div class="loading-full"><div class="spinner"></div>Cargando partidos…</div>
+    </div>
+
+    <div class="save-all-bar" id="saveAllBar" style="display:none;">
+      <div class="save-status" id="saveStatus">Los cambios se guardan al pulsar el botón</div>
+      <button class="btn-primary" style="width:auto;" id="saveBtn" onclick="savePronosticos()">💾 Guardar pronósticos</button>
+    </div>
+  </div>
+
+  <!-- ════════════ PANEL: TABLA ════════════ -->
+  <div id="tab-tabla" class="panel">
+    <div class="panel-title">Tabla de posiciones</div>
+    <div class="panel-sub">ACTUALIZADA AUTOMÁTICAMENTE SEGÚN RESULTADOS CARGADOS</div>
+    <div id="tablaArea">
+      <div class="loading-full"><div class="spinner"></div>Cargando posiciones…</div>
+    </div>
+  </div>
+
+  <!-- ════════════ PANEL: RESULTADOS ════════════ -->
+  <div id="tab-resultados" class="panel">
+    <div class="panel-title">Resultados oficiales</div>
+    <div class="panel-sub">CARGADOS POR EL EQUIPO DE SOMOS ZETA</div>
+
+    <div class="selector-bar">
+      <div class="phase-filter" id="phaseFilterRes">
+        <button class="phase-filter-btn active" onclick="filterPhaseRes('all', this)">Todos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseRes('grupos', this)">Grupos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseRes('dieciseisavos', this)">16avos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseRes('octavos', this)">Octavos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseRes('cuartos', this)">Cuartos</button>
+        <button class="phase-filter-btn" onclick="filterPhaseRes('semis', this)">Semis</button>
+        <button class="phase-filter-btn" onclick="filterPhaseRes('final', this)">Final</button>
+      </div>
+    </div>
+
+    <div id="resultadosArea">
+      <div class="loading-full"><div class="spinner"></div>Cargando resultados…</div>
+    </div>
+  </div>
+
+  <!-- ════════════ PANEL: PREMIOS ════════════ -->
+  <div id="tab-premios" class="panel">
+    <div class="panel-title">Premios</div>
+    <div class="panel-sub">QUÉ GANÁS POR JUGAR · QUÉ GANÁS POR GANAR</div>
+
+    <div class="premio-hero">
+      <div class="premio-hero-content">
+        <div class="premio-hero-label">PREMIO MAYOR</div>
+        <h2>VOUCHER<br><span>ACADEMIA ZETA</span></h2>
+        <div class="desc">Nuestra plataforma de cursos en Inteligencia Artificial aplicada. Aprendé a usar IA generativa, automatizaciones y agentes con criterio profesional. Lanzamiento oficial: julio 2026.</div>
+      </div>
+    </div>
+
+    <div class="premio-tiers">
+      <div class="premio-tier gold">
+        <div class="premio-tier-icon">🥇</div>
+        <div class="premio-tier-pos">1° Puesto</div>
+        <div class="premio-tier-prize">Curso<br>completo</div>
+        <div class="premio-tier-desc">Acceso 100% gratuito al curso completo de Academia Zeta más un combo de merch oficial Somos Zeta.</div>
+      </div>
+      <div class="premio-tier silver">
+        <div class="premio-tier-icon">🥈</div>
+        <div class="premio-tier-pos">2° Puesto</div>
+        <div class="premio-tier-prize">50% off<br>+ Bonus</div>
+        <div class="premio-tier-desc">50% de descuento en el curso completo más sesión de mentoría grupal en vivo con el equipo.</div>
+      </div>
+      <div class="premio-tier bronze">
+        <div class="premio-tier-icon">🥉</div>
+        <div class="premio-tier-pos">3° Puesto</div>
+        <div class="premio-tier-prize">25% off</div>
+        <div class="premio-tier-desc">25% de descuento en el curso completo de Academia Zeta a tu elección.</div>
+      </div>
+    </div>
+
+    <div class="premio-all">
+      <div class="premio-all-icon">🎁</div>
+      <div class="premio-all-text">
+        <h3>Para TODOS los participantes</h3>
+        <p>Todos los que jueguen el prode reciben el <strong>Kit de Iniciación Digital en IA</strong>: guía práctica, prompts curados y descuento exclusivo en Academia Zeta. <strong>Por participar, ya ganaste.</strong></p>
+      </div>
+    </div>
+
+    <div class="premio-social">
+      <h3>📣 Los ganadores se anuncian <span>solo en redes</span></h3>
+      <p>Para enterarte si quedaste en el podio, seguinos en nuestras redes. Los nombres de los 3 ganadores se publican únicamente en Instagram y LinkedIn de Somos Zeta al cierre del Mundial.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/somos.zeta/" target="_blank" rel="noopener" class="social-link">📷 Instagram</a>
+        <a href="https://www.linkedin.com/company/somos-zeta/" target="_blank" rel="noopener" class="social-link">💼 LinkedIn</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ PANEL: SOBRE NOSOTROS ════════════ -->
+  <div id="tab-somos-zeta" class="panel">
+    <div class="panel-title">Sobre Somos Zeta</div>
+    <div class="panel-sub">DIGITAL ADVICE · CONSULTORÍA · IA · TRANSFORMACIÓN DIGITAL</div>
+
+    <div class="about-hero">
+      <div class="about-hero-content">
+        <div class="about-tagline">Tecnología que <span>ACERCA</span>.<br>Soluciones que <span>TRANSFORMAN</span>.</div>
+        <p class="about-lead">Somos Zeta es una consultora especializada en formación profesional en productividad, digitalización e Inteligencia Artificial. Diseñamos formaciones prácticas con impacto medible y acompañamos a empresas en su transformación digital con un modelo de acompañamiento continuo que evoluciona junto al negocio.</p>
+      </div>
+    </div>
+
+    <div class="pilares-grid">
+      <div class="pilar-card">
+        <h4>💼 Negocio</h4>
+        <p>Estrategia, inteligencia comercial y modelos de gestión enfocados en resultados sostenibles.</p>
+      </div>
+      <div class="pilar-card teal">
+        <h4>⚙️ Procesos</h4>
+        <p>Mapeo, rediseño, optimización y automatización de procesos operativos y administrativos.</p>
+      </div>
+      <div class="pilar-card fuchsia">
+        <h4>🧠 Cultura</h4>
+        <p>Desarrollo de capacidades digitales, formación de líderes y gestión profesional del cambio.</p>
+      </div>
+      <div class="pilar-card gold">
+        <h4>🤖 Tecnología</h4>
+        <p>Desarrollo de soluciones a medida, integraciones, inteligencia artificial y analítica avanzada.</p>
+      </div>
+    </div>
+
+    <div class="servicios-cta">
+      <h3>🚀 Conocé nuestros servicios</h3>
+      <p>Capacitación en IA, Diagnóstico y Hoja de Ruta Digital, Ecosistema de Soluciones Digitales y Programa Integral de Transformación. Cuatro líneas que pueden contratarse de forma independiente o combinarse.</p>
+      <a href="https://somos-zeta.github.io/form-zeta-relev/" target="_blank" rel="noopener" class="btn-light">📥 Acceder al brochure completo</a>
+    </div>
+
+    <div class="contact-card">
+      <h3>Trabajemos juntos</h3>
+      <div class="contact-list">
+        <div class="contact-item">
+          <label>Web</label>
+          <a href="https://somos-zeta.com" target="_blank" rel="noopener">somos-zeta.com</a>
+        </div>
+        <div class="contact-item">
+          <label>Email</label>
+          <a href="mailto:formacion@somos-zeta.com">formacion@somos-zeta.com</a>
+        </div>
+        <div class="contact-item">
+          <label>Instagram</label>
+          <a href="https://www.instagram.com/somos.zeta/" target="_blank" rel="noopener">@somos.zeta</a>
+        </div>
+        <div class="contact-item">
+          <label>LinkedIn</label>
+          <a href="https://www.linkedin.com/company/somos-zeta/" target="_blank" rel="noopener">/somos-zeta</a>
+        </div>
+        <div class="contact-item">
+          <label>Origen</label>
+          <span>Esperanza, Santa Fe — Argentina</span>
+        </div>
+        <div class="contact-item">
+          <label>Fundador</label>
+          <span>Leonardo Zequin</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">✅ Guardado correctamente</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════
+   CONFIG — REEMPLAZAR CON LA URL DE TU APPS SCRIPT WEB APP
+   ════════════════════════════════════════════════════════════════ */
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-PdZwvcEwU5fI0s0U3Xep-NnbwY72d-6vLZ-WoULx-XKO3pUIHdUQdfJePc_pkFPQ/exec';
+
+/* ════════════════════════════════════════════════════════════════
+   STATE
+   ════════════════════════════════════════════════════════════════ */
+let currentUser = null;        // {email, nombre, apellido}
+let partidos = [];             // [{id, fase, grupo, fecha, equipo_local, equipo_visitante, deadline}]
+let resultados = {};           // {partido_id: {h, a}}
+let pronosticos = {};          // {partido_id: {h, a}}
+let pronoPhaseFilter = 'all';
+let resPhaseFilter = 'all';
+let isSaving = false;
+
+/* ════════════════════════════════════════════════════════════════
+   API CALLS — CORS-friendly POST con text/plain
+   ════════════════════════════════════════════════════════════════ */
+async function callApi(action, data = {}) {
+  if (APPS_SCRIPT_URL === 'TU_URL_DE_APPS_SCRIPT_AQUI') {
+    throw new Error('⚠️ Falta configurar la URL del Apps Script en el HTML.');
+  }
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action, data })
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    if (json.error) throw new Error(json.error);
+    return json;
+  } catch (err) {
+    console.error('API error:', err);
+    showToast('❌ Error: ' + (err.message || 'No se pudo conectar'), true);
+    throw err;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   AUTH
+   ════════════════════════════════════════════════════════════════ */
+function loadUserFromStorage() {
+  try {
+    const stored = localStorage.getItem('prodezeta_user');
+    if (stored) return JSON.parse(stored);
+  } catch(e) {}
+  return null;
+}
+
+function saveUserToStorage(user) {
+  localStorage.setItem('prodezeta_user', JSON.stringify(user));
+}
+
+function logout() {
+  if (!confirm('¿Salir del prode? Tus pronósticos quedan guardados, podés volver a entrar con el mismo email.')) return;
+  localStorage.removeItem('prodezeta_user');
+  currentUser = null;
+  document.getElementById('app').classList.remove('active');
+  document.getElementById('welcomeScreen').style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+async function registerUser() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const accept = document.getElementById('acceptTerms').checked;
+  const errorEl = document.getElementById('emailError');
+  const btn = document.getElementById('registerBtn');
+
+  errorEl.classList.remove('show');
+  document.getElementById('email').classList.remove('error');
+  document.getElementById('firstName').classList.remove('error');
+  document.getElementById('lastName').classList.remove('error');
+
+  if (!firstName) { document.getElementById('firstName').classList.add('error'); return; }
+  if (!lastName)  { document.getElementById('lastName').classList.add('error'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('email').classList.add('error');
+    errorEl.classList.add('show');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>INGRESANDO...';
+
+  try {
+    const result = await callApi('registerOrLogin', {
+      email, nombre: firstName, apellido: lastName, acepta_terminos: accept
+    });
+    currentUser = result.user;
+    saveUserToStorage(currentUser);
+    enterApp();
+    showToast(result.isNew ? '🎉 ¡Bienvenido/a al prode!' : '👋 Bienvenido/a de vuelta');
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = 'ENTRAR AL PRODE';
+  }
+}
+
+function enterApp() {
+  document.getElementById('welcomeScreen').style.display = 'none';
+  document.getElementById('app').classList.add('active');
+  document.getElementById('userName').textContent = currentUser.nombre;
+  document.getElementById('userAvatar').textContent = (currentUser.nombre[0] || '?').toUpperCase();
+  loadInitialData();
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DATA LOADING
+   ════════════════════════════════════════════════════════════════ */
+async function loadInitialData() {
+  try {
+    const [partidosRes, resultadosRes, pronosRes] = await Promise.all([
+      callApi('getPartidos'),
+      callApi('getResultados'),
+      callApi('getMisPronosticos', { email: currentUser.email })
+    ]);
+    partidos = partidosRes.partidos || [];
+    resultados = {};
+    (resultadosRes.resultados || []).forEach(r => {
+      resultados[r.partido_id] = { h: r.goles_local, a: r.goles_visitante, equipo_local: r.equipo_local, equipo_visitante: r.equipo_visitante };
+    });
+    pronosticos = {};
+    (pronosRes.pronosticos || []).forEach(p => {
+      pronosticos[p.partido_id] = { h: p.goles_local, a: p.goles_visitante };
+    });
+    renderPronoForm();
+    renderResultados();
+  } catch (err) {
+    console.error('Init error:', err);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SCORING
+   ════════════════════════════════════════════════════════════════ */
+function calcScore(matchId) {
+  const p = pronosticos[matchId];
+  const r = resultados[matchId];
+  if (!p || !r || r.h === '' || r.h === null || r.h === undefined || r.a === '' || r.a === null || r.a === undefined) return null;
+  const ph = parseInt(p.h), pa = parseInt(p.a);
+  const rh = parseInt(r.h), ra = parseInt(r.a);
+  if (isNaN(ph) || isNaN(pa) || isNaN(rh) || isNaN(ra)) return null;
+  const m = partidos.find(m => m.id == matchId);
+  const mult = (m && (m.fase === 'semis' || m.fase === 'final')) ? 2 : 1;
+  let pts = 0, isExact = false, isWinner = false;
+  if (ph === rh && pa === ra) {
+    pts = 3; isExact = true;
+    if (ph === pa) pts += 1;
+  } else {
+    const pRes = ph > pa ? 1 : (ph < pa ? -1 : 0);
+    const rRes = rh > ra ? 1 : (rh < ra ? -1 : 0);
+    if (pRes === rRes) { pts = 1; isWinner = true; }
+  }
+  return { pts: pts * mult, isExact, isWinner, doble: mult === 2 };
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TAB ROUTING
+   ════════════════════════════════════════════════════════════════ */
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (id === 'pronosticos') renderPronoForm();
+  if (id === 'tabla') loadAndRenderTabla();
+  if (id === 'resultados') renderResultados();
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PHASE FILTERS
+   ════════════════════════════════════════════════════════════════ */
+function filterPhaseProno(phase, btn) {
+  pronoPhaseFilter = phase;
+  document.querySelectorAll('#phaseFilterProno .phase-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPronoForm();
+}
+
+function filterPhaseRes(phase, btn) {
+  resPhaseFilter = phase;
+  document.querySelectorAll('#phaseFilterRes .phase-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderResultados();
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HELPERS
+   ════════════════════════════════════════════════════════════════ */
+function phaseName(p) {
+  return {grupos:'Fase de Grupos',dieciseisavos:'16avos de Final',octavos:'Octavos de Final',cuartos:'Cuartos de Final',semis:'Semifinales ★',final:'FINAL ★★'}[p] || p;
+}
+
+// Normaliza cualquier formato de fecha a "11 Jun"
+// Maneja: "11 Jun" (ya ok), "Thu Jun 11 2026 00:00:00 GMT-0300" (Sheets lo devuelve así), ISO strings
+function fmtFecha(f) {
+  if (!f) return '';
+  var str = String(f);
+  // Si ya es corta ("11 Jun", "01 Jul"), la devolvemos tal cual
+  if (/^\d{1,2}\s[A-Za-z]{3}$/.test(str.trim())) return str.trim();
+  // Intentar parsear como Date (funciona con strings largos y ISO)
+  try {
+    var d = new Date(str);
+    if (!isNaN(d.getTime())) {
+      var meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      // Usar UTC para no depender del timezone del navegador
+      return d.getUTCDate() + ' ' + meses[d.getUTCMonth()];
+    }
+  } catch(e) {}
+  return str;
+}
+
+function isMatchClosed(m) {
+  if (!m.deadline) return false;
+  return new Date(m.deadline) <= new Date();
+}
+
+function showToast(msg = '✅ Guardado', isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', isError);
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function escapeHtml(str) {
+  if (str == null) return '';
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PRONÓSTICOS — RENDER & SAVE
+   ════════════════════════════════════════════════════════════════ */
+function renderPronoForm() {
+  if (!partidos.length) return;
+  const area = document.getElementById('pronoFormArea');
+  const bar = document.getElementById('saveAllBar');
+  const phases = pronoPhaseFilter === 'all'
+    ? ['grupos','dieciseisavos','octavos','cuartos','semis','final']
+    : [pronoPhaseFilter];
+
+  let html = '';
+  phases.forEach(ph => {
+    const matches = partidos.filter(m => m.fase === ph);
+    if (!matches.length) return;
+    const grouped = {};
+    matches.forEach(m => {
+      const key = m.grupo || ph;
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(m);
+    });
+
+    Object.entries(grouped).forEach(([grp, ms]) => {
+      const title = ph === 'grupos' ? `Grupo ${grp}` : phaseName(ph);
+      const badge = (ph === 'semis' || ph === 'final') ? '<span class="badge-doble">★ PUNTOS DOBLES</span>' : '';
+      html += `<div class="matches-section">
+        <div class="matches-section-title ${ph}">${title}${badge}</div>
+        <div class="matches-table-wrap">`;
+
+      ms.forEach(m => {
+        const p = pronosticos[m.id] || {};
+        const r = resultados[m.id];
+        const homeName = m.equipo_local || (r && r.equipo_local) || `Equipo A (#${m.id})`;
+        const awayName = m.equipo_visitante || (r && r.equipo_visitante) || `Equipo B (#${m.id})`;
+        const homeEmpty = !m.equipo_local && !(r && r.equipo_local);
+        const awayEmpty = !m.equipo_visitante && !(r && r.equipo_visitante);
+        const closed = isMatchClosed(m);
+        let badgeHtml = '';
+        if (r && r.h !== '' && r.h != null && r.a !== '' && r.a != null) {
+          const s = calcScore(m.id);
+          if (s) {
+            const cls = s.pts === 0 ? 'pts-0' : (s.isExact ? 'pts-3' : 'pts-1');
+            const dobleTag = s.doble ? ' <span style="font-size:9px; display:block; letter-spacing:1px;">DOBLE</span>' : '';
+            badgeHtml = `<span class="match-pts-badge ${cls}">${s.pts}${dobleTag}</span>`;
+          } else {
+            badgeHtml = `<span class="match-pts-badge pending">—</span>`;
+          }
+        } else {
+          badgeHtml = `<span class="match-pts-badge pending">${closed ? 'CERRADO' : 'PENDIENTE'}</span>`;
+        }
+
+        html += `<div class="match-row">
+          <div class="match-num">${m.id}<span class="date">${fmtFecha(m.fecha)}</span></div>
+          <div class="match-team home ${homeEmpty?'empty':''}">${escapeHtml(homeName)}</div>
+          <input type="number" class="score-input ${closed?'locked':''}" min="0" max="20" value="${p.h ?? ''}" placeholder="?" data-mid="${m.id}" data-side="h" ${closed?'disabled':''}>
+          <div class="score-dash">–</div>
+          <input type="number" class="score-input ${closed?'locked':''}" min="0" max="20" value="${p.a ?? ''}" placeholder="?" data-mid="${m.id}" data-side="a" ${closed?'disabled':''}>
+          <div class="match-team away ${awayEmpty?'empty':''}">${escapeHtml(awayName)}</div>
+          ${badgeHtml}
+        </div>`;
+      });
+      html += `</div></div>`;
+    });
+  });
+
+  area.innerHTML = html || '<div class="empty-state"><div class="big">⚽</div>No hay partidos en esta fase aún</div>';
+  bar.style.display = 'flex';
+}
+
+async function savePronosticos() {
+  if (isSaving) return;
+  const inputs = document.querySelectorAll('#pronoFormArea .score-input:not(:disabled)');
+  const updates = [];
+  const local = {};
+  inputs.forEach(inp => {
+    const mid = inp.dataset.mid;
+    const side = inp.dataset.side;
+    if (!local[mid]) local[mid] = {};
+    local[mid][side] = inp.value;
+  });
+  Object.entries(local).forEach(([mid, vals]) => {
+    if ((vals.h !== '' && vals.h != null) || (vals.a !== '' && vals.a != null)) {
+      updates.push({
+        partido_id: parseInt(mid),
+        goles_local: vals.h === '' ? null : parseInt(vals.h),
+        goles_visitante: vals.a === '' ? null : parseInt(vals.a)
+      });
+    }
+  });
+
+  if (!updates.length) {
+    showToast('No hay pronósticos para guardar', true);
+    return;
+  }
+
+  isSaving = true;
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span>GUARDANDO...';
+
+  try {
+    await callApi('savePronosticos', { email: currentUser.email, pronosticos: updates });
+    // Refresh local
+    updates.forEach(u => {
+      pronosticos[u.partido_id] = { h: u.goles_local, a: u.goles_visitante };
+    });
+    renderPronoForm();
+    showToast('✅ Pronósticos guardados');
+  } catch(e) {}
+
+  isSaving = false;
+  btn.disabled = false;
+  btn.innerHTML = '💾 Guardar pronósticos';
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESULTADOS — READ ONLY
+   ════════════════════════════════════════════════════════════════ */
+function renderResultados() {
+  if (!partidos.length) return;
+  const area = document.getElementById('resultadosArea');
+  const phases = resPhaseFilter === 'all'
+    ? ['grupos','dieciseisavos','octavos','cuartos','semis','final']
+    : [resPhaseFilter];
+
+  let html = '';
+  phases.forEach(ph => {
+    const matches = partidos.filter(m => m.fase === ph);
+    if (!matches.length) return;
+    const grouped = {};
+    matches.forEach(m => {
+      const key = m.grupo || ph;
+      if (!grouped[key]) grouped[key] = [];
+      grouped[key].push(m);
+    });
+
+    Object.entries(grouped).forEach(([grp, ms]) => {
+      const title = ph === 'grupos' ? `Grupo ${grp}` : phaseName(ph);
+      const badge = (ph === 'semis' || ph === 'final') ? '<span class="badge-doble">★ PUNTOS DOBLES</span>' : '';
+      html += `<div class="matches-section">
+        <div class="matches-section-title ${ph}">${title}${badge}</div>
+        <div class="matches-table-wrap">`;
+
+      ms.forEach(m => {
+        const r = resultados[m.id];
+        const hasResult = r && r.h !== '' && r.h != null && r.a !== '' && r.a != null;
+        const homeName = (r && r.equipo_local) || m.equipo_local || `Equipo A (#${m.id})`;
+        const awayName = (r && r.equipo_visitante) || m.equipo_visitante || `Equipo B (#${m.id})`;
+        const homeEmpty = !((r && r.equipo_local) || m.equipo_local);
+        const awayEmpty = !((r && r.equipo_visitante) || m.equipo_visitante);
+        const statusHtml = hasResult
+          ? `<span class="match-pts-badge pts-3" style="font-size:14px;">✓</span>`
+          : `<span class="match-pts-badge pending">PENDIENTE</span>`;
+
+        html += `<div class="match-row">
+          <div class="match-num">${m.id}<span class="date">${fmtFecha(m.fecha)}</span></div>
+          <div class="match-team home ${homeEmpty?'empty':''}">${escapeHtml(homeName)}</div>
+          <div class="score-input locked" style="display:flex;align-items:center;justify-content:center;">${hasResult ? r.h : '?'}</div>
+          <div class="score-dash">–</div>
+          <div class="score-input locked" style="display:flex;align-items:center;justify-content:center;">${hasResult ? r.a : '?'}</div>
+          <div class="match-team away ${awayEmpty?'empty':''}">${escapeHtml(awayName)}</div>
+          ${statusHtml}
+        </div>`;
+      });
+      html += `</div></div>`;
+    });
+  });
+
+  area.innerHTML = html || '<div class="empty-state"><div class="big">🎯</div>No hay resultados cargados en esta fase</div>';
+}
+
+/* ════════════════════════════════════════════════════════════════
+   TABLA DE POSICIONES
+   ════════════════════════════════════════════════════════════════ */
+async function loadAndRenderTabla() {
+  const area = document.getElementById('tablaArea');
+  area.innerHTML = '<div class="loading-full"><div class="spinner"></div>Cargando posiciones…</div>';
+  try {
+    const res = await callApi('getTablaPosiciones');
+    renderTabla(res.tabla || []);
+  } catch(e) {
+    area.innerHTML = '<div class="empty-state"><div class="big">⚠️</div>No se pudo cargar la tabla</div>';
+  }
+}
+
+function renderTabla(tabla) {
+  const area = document.getElementById('tablaArea');
+  const myEmail = currentUser ? currentUser.email : '';
+
+  // Podium
+  const top3 = tabla.slice(0, 3);
+  const podiumIcons = ['🥇','🥈','🥉'];
+  const podiumClass = ['p1','p2','p3'];
+  const podiumLabels = ['1° LUGAR','2° LUGAR','3° LUGAR'];
+
+  let podiumHtml = '<div class="podium-banner">';
+  for (let i = 0; i < 3; i++) {
+    if (top3[i]) {
+      podiumHtml += `
+        <div class="podium-card ${podiumClass[i]}">
+          <div class="podium-icon">${podiumIcons[i]}</div>
+          <div class="podium-rank">${podiumLabels[i]}</div>
+          <div class="podium-name">${escapeHtml(top3[i].nombre)} ${escapeHtml(top3[i].apellido || '')}</div>
+          <div class="podium-pts">${top3[i].pts}<span> pts</span></div>
+        </div>`;
+    } else {
+      podiumHtml += `
+        <div class="podium-card empty">
+          <div class="podium-icon">⏳</div>
+          <div class="podium-rank">${podiumLabels[i]}</div>
+          <div class="podium-name">A definir</div>
+          <div class="podium-pts">—</div>
+        </div>`;
+    }
+  }
+  podiumHtml += '</div>';
+
+  let rankingHtml = `
+    <div class="ranking-wrap">
+      <div class="ranking-header">
+        <div>Pos.</div>
+        <div style="text-align:left;">Participante</div>
+        <div>Puntos</div>
+        <div>Exactos ⭐</div>
+        <div>Aciertos ✅</div>
+      </div>`;
+
+  if (!tabla.length) {
+    rankingHtml += '<div class="empty-state" style="border-radius:0; box-shadow:none;"><div class="big">📊</div>Todavía no hay puntajes cargados. Vuelve cuando arranquen los partidos.</div>';
+  } else {
+    const posCls = ['gold','silver','bronze'];
+    tabla.forEach((s, idx) => {
+      const isMe = s.email && s.email.toLowerCase() === myEmail.toLowerCase();
+      const meTag = isMe ? '<span class="me-tag">VOS</span>' : '';
+      rankingHtml += `
+        <div class="ranking-row ${isMe?'me':''}">
+          <div class="rank-pos ${posCls[idx]||''}">${idx + 1}</div>
+          <div class="rank-name">${escapeHtml(s.nombre)} ${escapeHtml(s.apellido || '')}${meTag}</div>
+          <div class="rank-pts">${s.pts}</div>
+          <div class="rank-cell rank-exact">⭐ ${s.exactos || 0}</div>
+          <div class="rank-cell rank-winner">✅ ${s.ganadores || 0}</div>
+        </div>`;
+    });
+  }
+  rankingHtml += '</div>';
+
+  area.innerHTML = podiumHtml + rankingHtml;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   INIT
+   ════════════════════════════════════════════════════════════════ */
+(function init() {
+  const stored = loadUserFromStorage();
+  if (stored && stored.email) {
+    currentUser = stored;
+    enterApp();
+  } else {
+    document.getElementById('welcomeScreen').style.display = 'flex';
+  }
+
+  // Enter key in welcome form
+  document.getElementById('email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') registerUser();
+  });
+})();
+</script>
+</body>
+</html>
