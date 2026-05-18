@@ -629,7 +629,7 @@
 
   .match-row {
     display: grid;
-    grid-template-columns: 40px 1fr 40px 40px 40px 1fr 90px;
+    grid-template-columns: 72px 1fr 40px 40px 40px 1fr 90px;
     align-items: center;
     gap: 8px;
     padding: 11px 14px;
@@ -646,9 +646,12 @@
     font-weight: 700;
     color: var(--gray-mid);
     text-align: center;
-    line-height: 1.2;
+    line-height: 1.3;
   }
-  .match-num .date { display: block; font-size: 9px; color: var(--gray-mid); font-family: 'Barlow', sans-serif; font-weight: 500; }
+  .match-num .date     { display: block; font-size: 9px;  color: var(--gray-mid);  font-family: 'Barlow', sans-serif; font-weight: 500; }
+  .match-num .hora     { display: block; font-size: 11px; color: var(--carbon);    font-family: 'Barlow', sans-serif; font-weight: 700; margin-top: 2px; }
+  .match-num .limite   { display: block; font-size: 8px;  color: var(--teal);      font-family: 'Barlow', sans-serif; font-weight: 600; margin-top: 1px; }
+  .match-num .limite.vence { color: var(--red-err); }
 
   .match-team { font-weight: 600; font-size: 13px; color: var(--carbon); }
   .match-team.home { text-align: right; }
@@ -2149,7 +2152,7 @@
     <div class="phases-row">
       <div class="phase-pill">
         <h4>🌎 Fase de grupos</h4>
-        <p><strong>72 partidos</strong> · 12 grupos (A–L)<br>Sistema estándar: 3 / 1 / 0 pts.<br>Pronóstico antes del pitazo.</p>
+        <p><strong>72 partidos</strong> · 12 grupos (A–L)<br>Sistema estándar: 3 / 1 / 0 pts.<br>Pronóstico hasta <strong>1 hora antes</strong> del pitazo.</p>
       </div>
       <div class="phase-pill">
         <h4>⚔️ 16avos, Octavos y Cuartos</h4>
@@ -2163,8 +2166,8 @@
 
     <div class="panel-title" style="font-size:22px; margin-bottom:10px;">Reglamento</div>
     <div class="reglamento-list">
-      <div class="reg-item"><div class="reg-num">01</div><div class="reg-text"><strong>Pronóstico antes del pitazo inicial.</strong> Una vez que empieza el partido, el pronóstico queda cerrado. Sin pronóstico cargado = 0 puntos.</div></div>
-      <div class="reg-item"><div class="reg-num">02</div><div class="reg-text"><strong>Podés modificar tu pronóstico</strong> tantas veces como quieras hasta el inicio del partido.</div></div>
+      <div class="reg-item"><div class="reg-num">01</div><div class="reg-text"><strong>El pronóstico cierra 1 hora antes del inicio de cada partido.</strong> Si hay varios partidos el mismo día, cada uno tiene su propio plazo. Sin pronóstico cargado a tiempo = 0 puntos.</div></div>
+      <div class="reg-item"><div class="reg-num">02</div><div class="reg-text"><strong>Podés modificar tu pronóstico</strong> tantas veces como quieras hasta 1 hora antes del inicio del partido.</div></div>
       <div class="reg-item"><div class="reg-num">03</div><div class="reg-text"><strong>En eliminación directa</strong> el resultado que cuenta es el del tiempo reglamentario + prórroga (90' + 30'). Los penales <strong>no cuentan como goles.</strong></div></div>
       <div class="reg-item"><div class="reg-num">04</div><div class="reg-text"><strong>Semis y Final:</strong> los puntos se duplican. Es la fase donde el ranking puede dar vuelta por completo.</div></div>
       <div class="reg-item"><div class="reg-num">05</div><div class="reg-text"><strong>Desempate:</strong> si dos jugadores terminan con el mismo puntaje, gana quien acertó más marcadores exactos. Si persiste, quien acertó más ganadores.</div></div>
@@ -2369,6 +2372,20 @@
    CONFIG — REEMPLAZAR CON LA URL DE TU APPS SCRIPT WEB APP
    ════════════════════════════════════════════════════════════════ */
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-PdZwvcEwU5fI0s0U3Xep-NnbwY72d-6vLZ-WoULx-XKO3pUIHdUQdfJePc_pkFPQ/exec';
+
+/* ════════════════════════════════════════════════════════════════
+   DEADLINES
+   ════════════════════════════════════════════════════════════════ */
+/**
+ * Cada partido cierra 1 hora antes de su inicio.
+ */
+const DEADLINE_OFFSET_MS = 60 * 60 * 1000;
+
+/** True si el plazo de un partido específico ya pasó (1h antes de su inicio) */
+function isDeadlinePassed(deadlineISO) {
+  if (!deadlineISO) return false;
+  return Date.now() >= new Date(deadlineISO).getTime() - DEADLINE_OFFSET_MS;
+}
 
 /* ════════════════════════════════════════════════════════════════
    STATE
@@ -2741,9 +2758,39 @@ function fmtFecha(f) {
   return str;
 }
 
+/** Hora del partido en hora Argentina (America/Argentina/Buenos_Aires) */
+function fmtHoraARG(deadlineISO) {
+  if (!deadlineISO) return '';
+  try {
+    return new Date(deadlineISO).toLocaleTimeString('es-AR', {
+      timeZone: 'America/Argentina/Buenos_Aires',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    }) + ' ARG';
+  } catch(e) { return ''; }
+}
+
+/** Hora límite para cargar pronóstico (1 hora antes del partido) en hora Argentina */
+function fmtLimiteARG(deadlineISO) {
+  if (!deadlineISO) return '';
+  try {
+    const limite = new Date(new Date(deadlineISO).getTime() - DEADLINE_OFFSET_MS);
+    return 'Límite ' + limite.toLocaleTimeString('es-AR', {
+      timeZone: 'America/Argentina/Buenos_Aires',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    });
+  } catch(e) { return ''; }
+}
+
+/** True si el límite vence en menos de 3 horas — para alerta visual en rojo */
+function limiteEsCercano(deadlineISO) {
+  if (!deadlineISO) return false;
+  const limiteMs = new Date(deadlineISO).getTime() - DEADLINE_OFFSET_MS;
+  const diff = limiteMs - Date.now();
+  return diff > 0 && diff < 3 * 60 * 60 * 1000;
+}
+
 function isMatchClosed(m) {
-  if (!m.deadline) return false;
-  return new Date(m.deadline) <= new Date();
+  return isDeadlinePassed(m.deadline);
 }
 
 function showToast(msg = '✅ Guardado', isError = false) {
@@ -2811,7 +2858,12 @@ function renderPronoForm() {
         }
 
         html += `<div class="match-row">
-          <div class="match-num">${m.id}<span class="date">${fmtFecha(m.fecha)}</span></div>
+          <div class="match-num">
+            ${m.id}
+            <span class="date">${fmtFecha(m.fecha)}</span>
+            <span class="hora">${fmtHoraARG(m.deadline)}</span>
+            <span class="limite ${limiteEsCercano(m.deadline) ? 'vence' : ''}">${closed ? '🔒 Cerrado' : fmtLimiteARG(m.deadline)}</span>
+          </div>
           <div class="match-team home ${homeEmpty?'empty':''}">${escapeHtml(homeName)}</div>
           <input type="number" class="score-input ${closed?'locked':''}" min="0" max="20" value="${p.h ?? ''}" placeholder="?" data-mid="${m.id}" data-side="h" ${closed?'disabled':''}>
           <div class="score-dash">–</div>
@@ -2914,7 +2966,11 @@ function renderResultados() {
           : `<span class="match-pts-badge pending">PENDIENTE</span>`;
 
         html += `<div class="match-row">
-          <div class="match-num">${m.id}<span class="date">${fmtFecha(m.fecha)}</span></div>
+          <div class="match-num">
+            ${m.id}
+            <span class="date">${fmtFecha(m.fecha)}</span>
+            <span class="hora">${fmtHoraARG(m.deadline)}</span>
+          </div>
           <div class="match-team home ${homeEmpty?'empty':''}">${escapeHtml(homeName)}</div>
           <div class="score-input locked" style="display:flex;align-items:center;justify-content:center;">${hasResult ? r.h : '?'}</div>
           <div class="score-dash">–</div>
@@ -3284,7 +3340,7 @@ function renderTabla(tabla) {
 
     // Only count matches that haven't closed yet (or have a pronóstico)
     const openMatches = list.filter(m => {
-      const closed = m.deadline && new Date(m.deadline) <= new Date();
+      const closed = isDeadlinePassed(m.deadline);
       return !closed;
     });
     const total = openMatches.length || list.length;
