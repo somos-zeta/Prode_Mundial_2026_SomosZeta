@@ -617,6 +617,7 @@
   .matches-section-title.octavos { background: var(--teal); }
   .matches-section-title.dieciseisavos { background: var(--sky); }
   .matches-section-title.cuartos { background: var(--purple-dark); }
+  .matches-section-title.tercer_puesto { background: var(--bronze); }
 
   .matches-section-title .badge-doble { font-size: 10px; opacity: 0.9; font-family: 'Barlow', sans-serif; letter-spacing: 2px; }
 
@@ -2167,7 +2168,7 @@
     <div class="panel-title" style="font-size:22px; margin-bottom:10px;">Reglamento</div>
     <div class="reglamento-list">
       <div class="reg-item"><div class="reg-num">01</div><div class="reg-text"><strong>El pronóstico cierra 1 hora antes del inicio de cada partido.</strong> Si hay varios partidos el mismo día, cada uno tiene su propio plazo. Sin pronóstico cargado a tiempo = 0 puntos.</div></div>
-      <div class="reg-item"><div class="reg-num">02</div><div class="reg-text"><strong>Podés modificar tu pronóstico</strong> tantas veces como quieras hasta 1 hora antes del inicio del partido.</div></div>
+      <div class="reg-item"><div class="reg-num">02</div><div class="reg-text"><strong>Podés modificar tu pronóstico</strong> tantas veces como quieras hasta el inicio del partido.</div></div>
       <div class="reg-item"><div class="reg-num">03</div><div class="reg-text"><strong>En eliminación directa</strong> el resultado que cuenta es el del tiempo reglamentario + prórroga (90' + 30'). Los penales <strong>no cuentan como goles.</strong></div></div>
       <div class="reg-item"><div class="reg-num">04</div><div class="reg-text"><strong>Semis y Final:</strong> los puntos se duplican. Es la fase donde el ranking puede dar vuelta por completo.</div></div>
       <div class="reg-item"><div class="reg-num">05</div><div class="reg-text"><strong>Desempate:</strong> si dos jugadores terminan con el mismo puntaje, gana quien acertó más marcadores exactos. Si persiste, quien acertó más ganadores.</div></div>
@@ -2198,6 +2199,7 @@
         <button class="phase-filter-btn" onclick="filterPhaseProno('octavos', this)">Octavos</button>
         <button class="phase-filter-btn" onclick="filterPhaseProno('cuartos', this)">Cuartos</button>
         <button class="phase-filter-btn" onclick="filterPhaseProno('semis', this)">Semis</button>
+        <button class="phase-filter-btn" onclick="filterPhaseProno('tercer_puesto', this)">3er Puesto</button>
         <button class="phase-filter-btn" onclick="filterPhaseProno('final', this)">Final</button>
       </div>
     </div>
@@ -2234,6 +2236,7 @@
         <button class="phase-filter-btn" onclick="filterPhaseRes('octavos', this)">Octavos</button>
         <button class="phase-filter-btn" onclick="filterPhaseRes('cuartos', this)">Cuartos</button>
         <button class="phase-filter-btn" onclick="filterPhaseRes('semis', this)">Semis</button>
+        <button class="phase-filter-btn" onclick="filterPhaseRes('tercer_puesto', this)">3er Puesto</button>
         <button class="phase-filter-btn" onclick="filterPhaseRes('final', this)">Final</button>
       </div>
     </div>
@@ -2736,7 +2739,7 @@ function filterPhaseRes(phase, btn) {
    HELPERS
    ════════════════════════════════════════════════════════════════ */
 function phaseName(p) {
-  return {grupos:'Fase de Grupos',dieciseisavos:'16avos de Final',octavos:'Octavos de Final',cuartos:'Cuartos de Final',semis:'Semifinales ★',final:'FINAL ★★'}[p] || p;
+  return {grupos:'Fase de Grupos',dieciseisavos:'16avos de Final',octavos:'Octavos de Final',cuartos:'Cuartos de Final',semis:'Semifinales ★',tercer_puesto:'3er Puesto',final:'FINAL ★★'}[p] || p;
 }
 
 // Normaliza cualquier formato de fecha a "11 Jun"
@@ -2814,7 +2817,7 @@ function renderPronoForm() {
   const area = document.getElementById('pronoFormArea');
   const bar = document.getElementById('saveAllBar');
   const phases = pronoPhaseFilter === 'all'
-    ? ['grupos','dieciseisavos','octavos','cuartos','semis','final']
+    ? ['grupos','dieciseisavos','octavos','cuartos','semis','tercer_puesto','final']
     : [pronoPhaseFilter];
 
   let html = '';
@@ -2933,7 +2936,7 @@ function renderResultados() {
   if (!partidos.length) return;
   const area = document.getElementById('resultadosArea');
   const phases = resPhaseFilter === 'all'
-    ? ['grupos','dieciseisavos','octavos','cuartos','semis','final']
+    ? ['grupos','dieciseisavos','octavos','cuartos','semis','tercer_puesto','final']
     : [resPhaseFilter];
 
   let html = '';
